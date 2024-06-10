@@ -9,10 +9,10 @@ Installation
 
 Test if you have Python installed by running your [terminal application](#terminal-applications) and typing `python` at the command prompt. If this runs a Python interpreter and the displayed version is at least 3.6, then you are good to go.
 
-If you don't already have Python installed, or your installed version is too old, download the free installer from python.org and run it. Then repeat the test as above to be sure the installation was successful.
+If you don't already have Python installed, or your installed version is too old, download the free installer from python.org and run it. Then repeat the test above, to be sure the installation was successful.
 
 Download this code, e.g. by going to https://github.com/r-owen/dtx_to_wif_converter/releases
-Unpack the results and put the directory (or, if you prefer, just the "dtx_to_wif") somewhere convenient, such as your home directory.
+Unpack the results and put the directory (or, if you prefer, just the file "dtx_to_wif") somewhere convenient, such as your home directory.
 
 Usage
 -----
@@ -23,7 +23,7 @@ Change directory to the directory containing `dtx_to_wif`.
 
 Type:
 
-`$ ./dtx_to_wif path1 path2 ...`
+`$ python dtx_to_wif path1 path2 ...`
 
 where each `path` is the path to a .dtx file or a directory containing .dtx files. On macOS, if you drag a file or folder from Finder onto your Terminal, the path will be typed for you. Windows may well do the same thing with its file browser.
 
@@ -32,6 +32,8 @@ The program will scan each provided directory for files whose names end in ".dtx
 For each ".dtx" file the program finds, it will write a new WIF file in the same directory, with the same name and the ".wif" extension. If such a WIF file already exists, the program will warn you and not replace it. However, if you specify option `--overwrite` the program will overwrite (replace) existing WIF files.
 
 Specify `--help` (or `-h`) to print help.
+
+Note: on macOS or linux you can type `./dtx_to_wif` instead of `python dtx_to_wif`, but that is unlikely to work on Windows.
 
 Terminal Applications
 ---------------------
