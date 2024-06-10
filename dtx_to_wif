@@ -358,7 +358,23 @@ Entries=2
             )
 
 
-parser = argparse.ArgumentParser(description="Convert a dtx file to wif")
+def print_dtx_data(data):
+    """Print parsed dtx data"""
+    for section_name, section_info in data.items():
+        print(f"Section: {section_name!r}")
+        if section_info.metadata:
+            print("  Metadata:")
+            for key, value in section_info.metadata.items():
+                print(f"    {key}={value!r}")
+        if section_info.data:
+            print("  Data:")
+            for line in section_info.data:
+                print(f"    {line!r}")
+
+
+parser = argparse.ArgumentParser(
+    description="Convert a FiberWorks .dtx file to WIF format"
+)
 parser.add_argument(
     "inpath", nargs="+", help="dtx files or directories of files to parse"
 )
@@ -367,28 +383,35 @@ parser.add_argument(
 )
 parser.add_argument("-v", "--verbose", action="store_true", help="print parsed data")
 args = parser.parse_args()
-for inpathstr in args.inpath:
-    inpath = pathlib.Path(inpathstr)
-    for infile in inpath.rglob("*.dtx"):
-        outfile = infile.with_suffix(".wif")
-        if not args.overwrite and outfile.exists():
-            print(f"Skipping {infile} because {outfile} already exists")
-            continue
 
+# We want to accept .dtx files as well as directory paths,
+# but path.rglob("*.dtx") returns nothing if path is a .dtx file.
+# Work around this by accumulating all file paths in advance.
+# Also purge duplicates while preserving order by using a dict
+# (set is all we need, but does not preserve order).
+infiles = dict()
+for infilestr in args.inpath:
+    inpath = pathlib.Path(infilestr)
+    if inpath.suffix == ".dtx":
+        infiles[inpath] = None
+    else:
+        infiles.update((infile, None) for infile in inpath.rglob("*.dtx"))
+
+for infile in infiles:
+    outfile = infile.with_suffix(".wif")
+    if outfile.exists():
+        if args.overwrite:
+            print(f"Overwriting existing {outfile}")
+        else:
+            print(f"Skipping existing {outfile}")
+            continue
+    else:
         print(f"Writing {outfile}")
-        try:
-            data = parse_dtx_file(infile)
-            write_wif(outfile, data)
-        except Exception as e:
-            print(f"Failed on {infile}: {e}")
-        if args.verbose:
-            for section_name, section_info in data.items():
-                print(f"Section: {section_name!r}")
-                if section_info.metadata:
-                    print("  Metadata:")
-                    for key, value in section_info.metadata.items():
-                        print(f"    {key}={value!r}")
-                if section_info.data:
-                    print("  Data:")
-                    for line in section_info.data:
-                        print(f"    {line!r}")
+
+    try:
+        data = parse_dtx_file(infile)
+        write_wif(outfile, data)
+    except Exception as e:
+        print(f"Failed on {infile}: {e}")
+    if args.verbose:
+        print_dtx_data(data)
