@@ -46,5 +46,5 @@ WIF Details
 Known differences from the WIF files that FiberWorks writes:
 
 - If no color information is given, this code writes a color table with only 2 entries. FiberWorks writes a much longer table.
-- The warp/weft color sections specify the color of every end and every pick. FiberWorks omits entries when the color is the default (the `Color` entry in the `[WEFT]` and `[WARP` sections). This means FiberWorks produces a smaller file, but both contain contain equivalent information.
-- The default color of weft (and possibly warp) yarns will probably not be the same as WIF files that WIF writes. This is because I have not figured out the algorithm FiberWorks uses to pick a default weft color. This is also the main reason I chose to list the color of each and every end and pick.
+- If the warp or weft has more than one color or separation, the associated section specifies a value for every end or pick. FiberWorks omits individual ends or picks that have the default value. I did this because I find WIF files easier to read if all color and separation data is in the same section.
+- The default colors and separations for warp and weft may not match (but the colors and separations of each pick and end should match). This difference is due to the fact that I have not figured out the algorithm FiberWorks uses to generate default colors and separations.
