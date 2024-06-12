@@ -157,15 +157,15 @@ def as_wif_bool(value):
 def make_wif_spacing(section_info):
     """Convert a weft spacing or warp spacing from dtx to wif.
 
-    Return a list of (1-based-pick, spacing in inches)
-    for picks that don't use the default dtx thickness of 4
+    Return a list of (1-based-pick, spacing in cm),
+    or an empty list if all picks use the default dtx thickness of 4.
     """
     if section_info is None:
         return []
+    if all(spacing == 4 for spacing in section_info.data):
+        return []
     return [
-        (pick + 1, spacing * 0.053)
-        for pick, spacing in enumerate(section_info.data)
-        if spacing != 4
+        (pick + 1, spacing * 0.053) for pick, spacing in enumerate(section_info.data)
     ]
 
 
@@ -198,10 +198,16 @@ def write_wif(filepath, data):
         num_ends = len(threading.data)
         if warp_colors is not None:
             default_warp_color = warp_colors.data[0] + 1
+            if all(color == default_warp_color - 1 for color in warp_colors.data):
+                # All are the default color, so skip this section
+                warp_colors = None
         else:
             default_warp_color = 1
         if weft_colors is not None:
             default_weft_color = weft_colors.data[0] + 1
+            if all(color == default_weft_color - 1 for color in weft_colors.data):
+                # All are the default color, so skip this section
+                weft_colors = None
         else:
             default_weft_color = 2
         if liftplan is not None:
