@@ -1,29 +1,32 @@
 Convert FiberWorks dtx handweaving files to WIF 1.1
 
-This is a command-line script written in Python. See Installation and Usage for instructions.
+This runs as a command-line script written in Python. See Installation and Usage for instructions.
+
+This package may also be used used to read dtx and wif files into a standard in-memory model (dtx_to_wif.DrawdownData). This might be useful for writing weaving design or loom driver software.
 
 This software is licensed under the MIT license; see license.text for details.
 
 Installation
 ------------
 
-Test if you have Python installed by running your [terminal application](#terminal-applications) and typing `python` at the command prompt. If this runs a Python interpreter and the displayed version is at least 3.6, then you are good to go.
+Test if you have Python installed by running your [terminal application](#terminal-applications) and typing `python` at the command prompt. If this runs a Python interpreter and the displayed version is at least 3.7, then you are good to go.
 
 If you don't already have Python installed, or your installed version is too old, download the free installer from python.org and run it. Then repeat the test above, to be sure the installation was successful.
 
-Download this code, e.g. by going to https://github.com/r-owen/dtx_to_wif_converter/releases
-Unpack the results and put the directory (or, if you prefer, just the file "dtx_to_wif") somewhere convenient, such as your home directory.
+Run the following terminal command to install the package:
+
+`pip install dtx_to_wif`
+
+The code is hosted on [github](https://github.com/r-owen/dtx_to_wif_converter). If you prefer to run from source, download the package, unpack it, cd to the source directory, and run: `pip install -e .`
 
 Usage
 -----
 
 Run your [terminal application](#terminal-applications).
 
-Change directory to the directory containing `dtx_to_wif`.
-
 Type:
 
-`$ python dtx_to_wif path1 path2 ...`
+`$ dtx_to_wif path1 path2 ...`
 
 where each `path` is the path to a .dtx file or a directory containing .dtx files. On macOS, if you drag a file or folder from Finder onto your Terminal, the path will be typed for you. Windows may well do the same thing with its file browser.
 
@@ -45,6 +48,5 @@ WIF Details
 
 Known differences from the WIF files that FiberWorks writes:
 
-- If no color information is given, this code writes a color table with only 2 entries. FiberWorks writes a much longer table.
-- If the warp or weft has more than one color or separation, the associated section specifies a value for every end or pick. FiberWorks omits individual ends or picks that have the default value. I did this because I find WIF files easier to read if all color and separation data is in the same section.
-- The default colors and separations for warp and weft may not match (but the colors and separations of each pick and end should match). This difference is due to the fact that I have not figured out the algorithm FiberWorks uses to generate default colors and separations.
+- The default colors and separations for warp and weft may not match (this is just an internal detail; the resulting drawdown is the same). This is because I have not figured out the algorithm FiberWorks uses to choose default colors and separations.
+- The date the dtx file was created is not written to the WIF file, since WIF has no standard location for this information. FiberWorks saves it as a comment in the [TEXT] section ("; Creation ...").
