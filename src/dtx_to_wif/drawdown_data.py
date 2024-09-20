@@ -19,15 +19,16 @@ class DrawdownType(enum.Enum):
 class WarpWeftData:
     """Information for the WARP or WEFT sections of a wif
 
-    Parameters:
-    * threads: number of threads. DrawdownData increases the value if needed,
-      so the default value of 0 results in the minimum required
-      to satisfy the drawdown.
-    * color: default color index (index into color table)
-    * color_rgb: default color as r,g,b
-    * spacing: default thread spacing
-    * thickness: default thread thickness
-    * units: units for spacing and thickness
+    Parameters
+    ----------
+    threads: number of threads. DrawdownData increases the value if needed,
+        so the default value of 0 results in the minimum required
+        to satisfy the drawdown.
+    color: default color index (index into color table)
+    color_rgb: default color as r,g,b
+    spacing: default thread spacing
+    thickness: default thread thickness
+    units: units for spacing and thickness\
     """
 
     threads: int = 0
@@ -49,55 +50,67 @@ class DrawdownData:
 
     Parameters
     ----------
-    * name: original file name
-    * threading: dict of thread index: shafts
-        where shaft is a tuple of 0-based shafts.
-        Omitted threads are not threaded on any shaft.
-        Also -1 is the standard value for a non-existent shaft.
+    name: original file name
+    threading: dict of thread index: shafts
+        where shaft is a tuple of shafts.
+        Entries with value () or (0,) are removed in postprocessing.
+        Omitted entries are not threaded on any shaft.
         Note that is unusual, but supported by WIF, for a thread to be threaded
         on more than one shaft; that is why the values are tuples.
-    * tieup: list of treadles, where each treadle is a tuple of shafts.
-    * treadling: dict of pick index: treadles, where treadles is a tuple
-      of treadles.
-    * liftplan: list dict of pick: shafts where shafts is a tuple
-      of-based shafts. Omitted picks lift nothing.
-    * color_table: dict of color index: color tuple, where each color
-      is a tuple of (r, g, b) values. The keys must include all integers
-      from 1 through len(color_table).
-    * warp: warp data; see WarpWeftData
-    * weft: weft data; see WarpWeftData
-    * warp_colors: color for each warp thread,
-      as a dict of thread index: index into color_table
-    * warp_spacing: space each thread takes up,
-      as a dict of thread index: spacing
-    * warp_thickness: thickness of each thread,
-      as a dict of thread index: thickness
-    * weft_colors: color for each weft thread,
-      as a dict of thread index: index into color_table
-    * weft_spacing: space each thread takes up,
-      as a dict of thread index: spacing
-    * weft_thickness: thickness of each thread,
-      as a dict of thread index: thickness
-    * color_range: minimum, maximum allowed color value (inclusive)
-    * is_rising_shed: if true, shafts go up, if false, shafts go down
-    * source_program: name of program that wrote the original file
-    * source_version: version of pogram that wrote the original file
-    * num_shafts: number of shafts
-    * num_treadles: number of treadles
+    tieup: list of treadles, where each treadle is a tuple of shafts.
+        Entries with value () or (0,) are removed in postprocessing.
+        Omitted entries raise no shafts.
+    treadling: dict of pick index: treadles, where treadles is a tuple
+        of treadles.
+        Entries with value () or (0,) are removed in postprocessing.
+        Omitted entries raise no shafts.
+    liftplan: list dict of pick: shafts where shafts is a tuple
+        of-based shafts. Omitted picks lift nothing.
+        Entries with value () or (0,) are removed in postprocessing.
+        Omitted entries raise no shafts.
+    color_table: dict of color index: color tuple, where each color
+        is a tuple of (r, g, b) values. The keys must include all integers
+        from 1 through len(color_table).
+    warp: warp data; see WarpWeftData
+    weft: weft data; see WarpWeftData
+    warp_colors: color for each warp thread,
+        as a dict of thread index: index into color_table
+    warp_spacing: space each thread takes up,
+        as a dict of thread index: spacing
+    warp_thickness: thickness of each thread,
+        as a dict of thread index: thickness
+    weft_colors: color for each weft thread,
+        as a dict of thread index: index into color_table
+    weft_spacing: space each thread takes up,
+        as a dict of thread index: spacing
+    weft_thickness: thickness of each thread,
+        as a dict of thread index: thickness
+    color_range: minimum, maximum allowed color value (inclusive)
+    is_rising_shed: if true, shafts go up, if false, shafts go down
+    source_program: name of program that wrote the original file
+    source_version: version of pogram that wrote the original file
+    num_shafts: number of shafts
+    num_treadles: number of treadles
 
     Notes
     -----
-    ``warp.threads``, ``num_shafts``, ``num_treadles``,
-    and ``weft.threads`` are increased, if needed, based on computation
-    from ``threading``, ``tieup``, ``treadling``, and ``liftplan``.
+    Many fields are cleaned up in postprocessing:
+
+    *  ``num_shafts`` and ``num_treadles`` are increased, if needed, based on
+    computation from ``threading``, ``tieup``, ``treadling``, and ``liftplan``.
     Thus you can set each of these to 0 (the default) to have them set to
-    the smallest value required.
+    the smallest value required. The only reason to specify a value larger
+    than the actual number of shafts or treadles is as a placeholder for an
+    incomplete drawdown.
 
-    Warp/weft colors, spacing, and thickness are post-processed
-    to elide default values and put entries in thread order.
+    * Warp/weft colors, ``spacing``, and ``thickness`` have keys
+    sorted, and default values are deleted.
 
-    The field names match wif section names, e.g.
-    WARP COLORS, WEFT SPACING, WARP THICKNESS.
+    ``color_table`` has keys sorted.
+
+    ``threading``, ``tieup``, ``treadling``, and ``liftplan`` have keys sorted,
+    and  entries with value () or (0,) are omitted, since those values mean
+    the same thing as no entry.
 
     Raises
     ------
@@ -164,13 +177,13 @@ class DrawdownData:
 
         # Clean up the threading, tieup, treadling, and liftplan dicts
         # by putting keys in order and eliding empty values
-        self._clean_dict(self.threading, ())
-        self._clean_dict(self.tieup, ())
-        self._clean_dict(self.treadling, ())
-        self._clean_dict(self.liftplan, ())
+        self.threading = self._clean_ints_dict(self.threading)
+        self.tieup = self._clean_ints_dict(self.tieup)
+        self.treadling = self._clean_ints_dict(self.treadling)
+        self.liftplan = self._clean_ints_dict(self.liftplan)
 
         # Clean up the color_table, which has no default values
-        self._clean_dict(self.color_table, dataclasses._MISSING_TYPE)
+        self.color_table = self._clean_dict(self.color_table, dataclasses._MISSING_TYPE)
 
         self.warp.threads = max(len(self.threading), self.warp.threads)
 
@@ -264,4 +277,15 @@ class DrawdownData:
     def _clean_dict(
         self, data: dict[int, ValueType], default_value: Any
     ) -> dict[int, ValueType]:
+        """Sort by keys and remove default entries.
+
+        Use a default value of dataclasses.dataclasses._MISSING_TYPE,
+        or similar, if the dict has no default values.
+        """
         return {key: data[key] for key in sorted(data) if data[key] != default_value}
+
+    def _clean_ints_dict(
+        self, data: dict[int, tuple[int, ...]]
+    ) -> dict[int, tuple[int, ...]]:
+        """Sort by keys and remove [] and [0] entries."""
+        return {key: data[key] for key in sorted(data) if data[key] not in ([], [0])}
