@@ -25,8 +25,8 @@ requires-python = ">=3.7"
 dtx_to_wif = "dtx_to_wif:run_dtx_to_wif"
 
 [project.urls]
-Homepage = "https://github.com/r-owen/dtx_to_wif_converter.git"
-Issues = "https://github.com/r-owen/dtx_to_wif_converter.git/issues"
+Homepage = "https://github.com/r-owen/dtx_to_wif_converter"
+Issues = "https://github.com/r-owen/dtx_to_wif_converter/issues"
 
 [tool.setuptools_scm]
 write_to = "src/dtx_to_wif/version.py"
