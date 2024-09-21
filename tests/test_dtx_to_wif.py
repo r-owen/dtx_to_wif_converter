@@ -11,33 +11,39 @@ datadir = rootdir / "tests" / "data"
 class TestDtxToWif(unittest.TestCase):
     def test_dtx_to_wif(self):
         cmdname = "dtx_to_wif"
-        with tempfile.TemporaryDirectory() as outdirname:
-            print(f"{datadir=}, {outdirname=}")
-            outdir = pathlib.Path(outdirname)
-            shutil.copytree(datadir, outdir / "data")
+        # Copy tests/data to a temp dir and run dtx_to_wif on the copied files,
+        # to avoid writing files to tests/data
+        with tempfile.TemporaryDirectory() as tempdirname:
+            tempdir = pathlib.Path(tempdirname)
+            for subdirname in ("basic_dtx", "desired_basic_wif"):
+                shutil.copytree(datadir / subdirname, tempdir / subdirname)
+
+            basic_dtx_dir = tempdir / "basic_dtx"
+            basic_dtx_dir_str = basic_dtx_dir.as_posix()
+            desired_basic_wif_dir = tempdir / "desired_basic_wif"
             result = subprocess.run(
-                [cmdname, outdirname], check=True, capture_output=True
+                [cmdname, basic_dtx_dir_str], check=True, capture_output=True
             )
             self.check_run_result(result, desired_prefix="Writing")
-            dtxpaths = [path for path in outdir.rglob("*.dtx")]
-            assert len(dtxpaths) == 4
-            for dtxpath in dtxpaths:
+            basic_dtx_paths = [path for path in basic_dtx_dir.rglob("*.dtx")]
+            assert len(basic_dtx_paths) == 4
+            for dtxpath in basic_dtx_paths:
                 wifpath = dtxpath.with_suffix(".wif")
                 assert wifpath.is_file()
-                desired_wifpath = datadir / "expected wifs" / wifpath.name
-                self.assert_files_equal(wifpath, desired_wifpath)
+                desired_basic_wif_path = desired_basic_wif_dir / wifpath.name
+                self.assert_files_equal(wifpath, desired_basic_wif_path)
 
-            # Clear the wif files and run again.
-            # All wif files should be empty because they are not overwritten
-            for dtxpath in dtxpaths:
+            # Clear the wif files in the basic_dtx dir tree and run again.
+            # All wif files should be empty because they are not overwritten.
+            for dtxpath in basic_dtx_paths:
                 wifpath = dtxpath.with_suffix(".wif")
                 with open(wifpath, "w") as f:
                     f.truncate()
             result = subprocess.run(
-                [cmdname, outdirname], check=True, capture_output=True
+                [cmdname, basic_dtx_dir_str], check=True, capture_output=True
             )
             self.check_run_result(result, desired_prefix="Skipping")
-            for dtxpath in dtxpaths:
+            for dtxpath in basic_dtx_paths:
                 wifpath = dtxpath.with_suffix(".wif")
                 assert wifpath.is_file()
                 with open(wifpath, "r") as f:
@@ -47,14 +53,14 @@ class TestDtxToWif(unittest.TestCase):
             # Check that --overwrite replaces the (currently empty) wif files
             # and check that individual files can be specified
             # (instead of, or in addition to, directories)
-            filepathargs = [cmdname] + dtxpaths + ["--overwrite"]
+            filepathargs = [cmdname] + basic_dtx_paths + ["--overwrite"]
             result = subprocess.run(filepathargs, check=True, capture_output=True)
             self.check_run_result(result, desired_prefix="Overwriting")
-            for dtxpath in dtxpaths:
+            for dtxpath in basic_dtx_paths:
                 wifpath = dtxpath.with_suffix(".wif")
                 assert wifpath.is_file()
-                desired_wifpath = datadir / "expected wifs" / wifpath.name
-                self.assert_files_equal(wifpath, desired_wifpath)
+                desired_basic_wif_path = datadir / "desired_basic_wif" / wifpath.name
+                self.assert_files_equal(wifpath, desired_basic_wif_path)
 
     def check_run_result(self, result, desired_prefix):
         """Check the result from running the function.

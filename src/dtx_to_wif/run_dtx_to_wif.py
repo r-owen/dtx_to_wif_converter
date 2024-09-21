@@ -2,6 +2,7 @@ __all__ = ["run_dtx_to_wif"]
 
 import argparse
 import pathlib
+import traceback
 
 from .dtx_reader import read_dtx
 from .wif_writer import write_wif
@@ -48,12 +49,14 @@ def run_dtx_to_wif() -> None:
             print(f"Writing {outfile}")
 
         try:
-            if True:
-                with open(infile, "r") as f:
-                    drawdown = read_dtx(f)
-                with open(outfile, "w") as f:
-                    write_wif(f, drawdown)
-        except Exception as e:
-            print(f"Failed on {infile}: {e!r}")
+            with open(infile, "r") as f:
+                drawdown = read_dtx(f, prune=False)
+            with open(outfile, "w") as f:
+                write_wif(f, drawdown)
+        except Exception:
+            traceback.print_exc()
+            print(f"Failed to write {outfile}")
+            continue
+
         if args.verbose:
             print(drawdown)

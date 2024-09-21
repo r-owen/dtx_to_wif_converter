@@ -72,25 +72,25 @@ Title={data.name}
 
     f.write("\n[THREADING]\n")
     for thread, shafts in data.threading.items():
-        shafts_str = ",".join(str(shaft) for shaft in shafts)
+        shafts_str = ",".join(str(shaft) for shaft in sorted(shafts))
         f.write(f"{thread}={shafts_str}\n")
 
     if data.tieup:
         f.write("\n[TIEUP]\n")
         for treadle, shafts in data.tieup.items():
-            shafts_str = ",".join(str(shaft) for shaft in shafts)
+            shafts_str = ",".join(str(shaft) for shaft in sorted(shafts))
             f.write(f"{treadle}={shafts_str}\n")
 
     if data.treadling:
         f.write("\n[TREADLING]\n")
         for thread, treadles in data.treadling.items():
-            treadle_str = ",".join(str(treadle) for treadle in treadles)
+            treadle_str = ",".join(str(treadle) for treadle in sorted(treadles))
             f.write(f"{thread}={treadle_str}\n")
 
     if data.liftplan:
         f.write("\n[LIFTPLAN]\n")
         for thread, shafts in data.liftplan.items():
-            shafts_str = ",".join(str(shaft) for shaft in shafts)
+            shafts_str = ",".join(str(shaft) for shaft in sorted(shafts))
             f.write(f"{thread}={shafts_str}\n")
 
     f.write(

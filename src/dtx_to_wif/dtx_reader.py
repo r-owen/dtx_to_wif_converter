@@ -41,11 +41,17 @@ class SectionData:
             self.data.append(line)
 
 
-def read_dtx(f: TextIO) -> DrawdownData:
+def read_dtx(f: TextIO, prune: bool = False) -> DrawdownData:
     """Parse a dtx weaving file into DrawdownData
 
     Leading and trailing whitespace are stripped
     and blank lines are ignored.
+
+    Parameters
+    ----------
+    f: a readable text file
+    prune: if true, unused shafts and treadles are removed from
+        threading, tieup, treadling, and liftplan
     """
     sections = dict()
     section_name = ""
@@ -68,12 +74,12 @@ def read_dtx(f: TextIO) -> DrawdownData:
         if section_info is not None:
             argdict[section_name] = processor(section_info)
         else:
-            argdict[section_name] = []
+            argdict[section_name] = {}
 
     for ww_name in ("warp", "weft"):
-        ww_colors = argdict.get(f"{ww_name}_colors")
+        ww_colors: dict[int, int] | None = argdict.get(f"{ww_name}_colors")  # type: ignore
         if ww_colors:
-            default_color: int | None = ww_colors[1]  # type: ignore
+            default_color: int | None = ww_colors[1]
         elif "color_table" in argdict:
             default_color = dict(warp=1, weft=2)[ww_name]
         else:
@@ -95,6 +101,7 @@ def read_dtx(f: TextIO) -> DrawdownData:
         source_version = ".".join(source_version.split(".")[0:2])
 
     return DrawdownData(
+        pruned=prune,
         name=get_data_item(sections, "description", 0, "?"),
         color_range=(0, 255),
         is_rising_shed=True,
@@ -138,17 +145,17 @@ def process_int_list(section_info) -> list[int]:
     return [int(item) for item in section_data_str.split()]
 
 
-def process_threading(section_info) -> dict[int, tuple[int, ...]]:
+def process_threading(section_info) -> dict[int, set[int]]:
     """Process the threading section.
 
     Note that WIF supports multiple shafts per thread,
     but dtx apparently does not.
     """
     intlist = process_int_list(section_info)
-    return {thread + 1: (value,) for thread, value in enumerate(intlist)}
+    return {thread + 1: {value} for thread, value in enumerate(intlist)}
 
 
-def process_liftplan(liftplan_info) -> dict[int, tuple[int, ...]]:
+def process_liftplan(liftplan_info) -> dict[int, set[int]]:
     """Process the liftplan section
 
     Input format: rows are picks, each a string of 0/1
@@ -159,16 +166,15 @@ def process_liftplan(liftplan_info) -> dict[int, tuple[int, ...]]:
     """
     result = {}
     for pick, boolstr in enumerate(liftplan_info.data):
-        result[pick + 1] = tuple(
-            i + 1 for i, value in enumerate(boolstr) if value == "1"
-        )
+        result[pick + 1] = {i + 1 for i, value in enumerate(boolstr) if value == "1"}
     return result
 
 
 def process_warpweft_colors(section_info) -> dict[int, int]:
     """Process a warp or weft colors section
 
-    Input format: color indices as space-separated ints
+    Input format: 0-based color indices into the color table
+    as space-separated ints.
 
     Return colors as a dict of thread index: 0-based color index
     """
@@ -188,7 +194,7 @@ def process_warpweft_spacing(section_info) -> dict[int, float]:
     return {i + 1: value * UnitFiberSpacing for i, value in enumerate(int_values)}
 
 
-def process_tieup(tieup_info) -> dict[int, tuple[int, ...]]:
+def process_tieup(tieup_info) -> dict[int, set[int]]:
     """Process the tieup section.
 
     Input format: rows are shafts, with shaft 1 as the last line.
@@ -199,15 +205,15 @@ def process_tieup(tieup_info) -> dict[int, tuple[int, ...]]:
     result = {}
     num_treadles = len(tieup_info.data[0])
     for treadle in range(num_treadles):
-        result[treadle + 1] = tuple(
+        result[treadle + 1] = {
             i + 1
             for i, boolstr in enumerate(reversed(tieup_info.data))
             if boolstr[treadle] == "1"
-        )
+        }
     return result
 
 
-def process_treadling(treadling_info: SectionData) -> dict[int, tuple[int, ...]]:
+def process_treadling(treadling_info: SectionData) -> dict[int, set[int]]:
     """Process the treadling section.
 
     Input format:
@@ -236,7 +242,7 @@ def process_treadling(treadling_info: SectionData) -> dict[int, tuple[int, ...]]
     compressed_treadling_data_str = re.sub(", +", ",", treadling_data_str)
     treadle_sets = compressed_treadling_data_str.split()
     return {
-        pick + 1: tuple(int(treadle) for treadle in treadle_set.split(","))
+        pick + 1: {int(treadle) for treadle in treadle_set.split(",")}
         for pick, treadle_set in enumerate(treadle_sets)
     }
 

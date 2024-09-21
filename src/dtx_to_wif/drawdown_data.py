@@ -50,21 +50,23 @@ class DrawdownData:
 
     Parameters
     ----------
+    pruned: if true, entries for shaft and treadle=0 are removed from
+        tieup, treadline, and liftplan.
     name: original file name
     threading: dict of thread index: shafts
-        where shaft is a tuple of shafts.
+        where shaft is a set of shafts.
         Entries with value () or (0,) are removed in postprocessing.
         Omitted entries are not threaded on any shaft.
         Note that is unusual, but supported by WIF, for a thread to be threaded
-        on more than one shaft; that is why the values are tuples.
-    tieup: list of treadles, where each treadle is a tuple of shafts.
+        on more than one shaft; that is why the values are sets.
+    tieup: list of treadles, where each treadle is a set of shafts.
         Entries with value () or (0,) are removed in postprocessing.
         Omitted entries raise no shafts.
-    treadling: dict of pick index: treadles, where treadles is a tuple
+    treadling: dict of pick index: treadles, where treadles is a set
         of treadles.
         Entries with value () or (0,) are removed in postprocessing.
         Omitted entries raise no shafts.
-    liftplan: list dict of pick: shafts where shafts is a tuple
+    liftplan: list dict of pick: shafts where shafts is a set
         of-based shafts. Omitted picks lift nothing.
         Entries with value () or (0,) are removed in postprocessing.
         Omitted entries raise no shafts.
@@ -122,7 +124,8 @@ class DrawdownData:
     RuntimeError
         If any color values are out of range.
     RuntimeError
-        If the color keys are not a proper sequence 1, 2, ... N.
+        If the color keys are not a complete set 1, 2, ... N
+        (though they don't have to sorted on input).
     RuntimeError
         If ``warp_colors`` or ``weft_colors`` is specified,
         but not ``color_table``.
@@ -130,16 +133,15 @@ class DrawdownData:
         If ``color_table`` is specified, but not ``color_range``.
     RuntimeError
         If ``color_range`` invalid: length != 2 or
-        min (element 0) >= max (element 1)
-    RuntimeError
-        If there are more treadles in the treadling than in the tieup.
+        color_range[0] (min) >= color_range[1] (max)
     """
 
+    pruned: bool
     name: str
-    threading: dict[int, tuple[int, ...]]
-    tieup: dict[int, tuple[int, ...]]
-    treadling: dict[int, tuple[int, ...]]
-    liftplan: dict[int, tuple[int, ...]]
+    threading: dict[int, set[int]]
+    tieup: dict[int, set[int]]
+    treadling: dict[int, set[int]]
+    liftplan: dict[int, set[int]]
     color_table: dict[int, tuple[int, int, int]]
     warp: WarpWeftData
     weft: WarpWeftData
@@ -157,6 +159,14 @@ class DrawdownData:
     num_treadles: int = 0
 
     def __post_init__(self) -> None:
+        # Test for missing color table before cleaning warp and weft colors
+        # since they may well be empty afterwards
+        if self.warp_colors or self.weft_colors:
+            if not self.color_table:
+                raise RuntimeError(
+                    "warp and/or weft colors specified, but not color table"
+                )
+
         # Clean up warp/weft colors, spacing, and threading dicts
         # Put the keys in thread order and elide default values (if known).
         for ww in ("warp", "weft"):
@@ -176,11 +186,19 @@ class DrawdownData:
                 )
 
         # Clean up the threading, tieup, treadling, and liftplan dicts
-        # by putting keys in order and eliding empty values
-        self.threading = self._clean_ints_dict(self.threading)
-        self.tieup = self._clean_ints_dict(self.tieup)
-        self.treadling = self._clean_ints_dict(self.treadling)
-        self.liftplan = self._clean_ints_dict(self.liftplan)
+        # by putting keys in order and eliding {0} from values
+        # and resulting items that are empty
+        if self.pruned:
+            self.threading = self._prune_ints_set_dict(self.threading)
+            self.tieup = self._prune_ints_set_dict(self.tieup)
+            self.treadling = self._prune_ints_set_dict(self.treadling)
+            self.liftplan = self._prune_ints_set_dict(self.liftplan)
+
+        else:
+            self.threading = self._clean_ints_set_dict(self.threading)
+            self.tieup = self._clean_ints_set_dict(self.tieup)
+            self.treadling = self._clean_ints_set_dict(self.treadling)
+            self.liftplan = self._clean_ints_set_dict(self.liftplan)
 
         # Clean up the color_table, which has no default values
         self.color_table = self._clean_dict(self.color_table, dataclasses._MISSING_TYPE)
@@ -235,13 +253,7 @@ class DrawdownData:
                 "Must specify non-empty liftplan, or both tieup and treadling"
             )
 
-        if self.warp_colors or self.weft_colors:
-            if self.color_table is None:
-                raise RuntimeError(
-                    "warp and/or weft colors specified, but not color table"
-                )
-
-        if self.color_table is not None and self.color_range is None:
+        if self.color_table and self.color_range is None:
             raise RuntimeError("color table specified, but not color range")
 
         if self.color_range is not None:
@@ -274,6 +286,27 @@ class DrawdownData:
                             f"[{self.color_range[0]}, {self.color_range[1]}]"
                         )
 
+        # Check that all color values are in range
+        max_color_in_table = max(self.color_table.keys())
+        for ww_name in ("warp", "weft"):
+            ww_colors = getattr(self, f"{ww_name}_colors")
+            if ww_colors:
+                if max(ww_colors.values()) > max_color_in_table:
+                    raise RuntimeError(
+                        f"Invalid {ww_name}_colors={ww_colors}: "
+                        f"one or more colors > {max_color_in_table}; "
+                    )
+                if min(getattr(self, f"{ww_name}_colors").values()) < 1:
+                    raise RuntimeError(
+                        f"Invalid {ww_name}_colors={ww_colors}: one or more colors < 1"
+                    )
+            ww_info = getattr(self, ww_name)
+            if ww_info.color is not None:
+                if ww_info.color < 1 or ww_info.color > max_color_in_table:
+                    raise RuntimeError(
+                        f"Invalid {ww_name}.color {ww_info.color} not in range [0, {max_color_in_table}]"
+                    )
+
     def _clean_dict(
         self, data: dict[int, ValueType], default_value: Any
     ) -> dict[int, ValueType]:
@@ -284,8 +317,10 @@ class DrawdownData:
         """
         return {key: data[key] for key in sorted(data) if data[key] != default_value}
 
-    def _clean_ints_dict(
-        self, data: dict[int, tuple[int, ...]]
-    ) -> dict[int, tuple[int, ...]]:
-        """Sort by keys and remove [] and [0] entries."""
-        return {key: data[key] for key in sorted(data) if data[key] not in ([], [0])}
+    def _clean_ints_set_dict(self, data: dict[int, set[int]]) -> dict[int, set[int]]:
+        """Sort by keys and remove items whose value is empty or just {0}."""
+        return {key: data[key] for key in sorted(data) if bool(data[key] - {0})}
+
+    def _prune_ints_set_dict(self, data: dict[int, set[int]]) -> dict[int, set[int]]:
+        """Sort by keys, remove 0 from values, remove empty items."""
+        return {key: data[key] - {0} for key in sorted(data) if bool(data[key] - {0})}

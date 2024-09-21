@@ -20,11 +20,17 @@ WifBoolDict = {
 }
 
 
-def read_wif(f: TextIO) -> DrawdownData:
-    """Parse a dtx weaving file into DrawdownData
+def read_wif(f: TextIO, prune: bool) -> DrawdownData:
+    """Parse a wif weaving file into DrawdownData
 
     Leading and trailing whitespace are stripped
     and blank lines are ignored.
+
+    Parameters
+    ----------
+    f: a readable text file
+    prune: if true, unused shafts and treadles are removed from
+        threading, tieup, treadling, and liftplan
     """
     raw_data = ConfigParser()
     raw_data.read_file(f)
@@ -82,6 +88,7 @@ def read_wif(f: TextIO) -> DrawdownData:
             )
 
     return DrawdownData(
+        pruned=prune,
         name=raw_data.get("text", "title", fallback="?"),
         color_range=color_range,  # type: ignore
         is_rising_shed=raw_data.getboolean("weaving", "rising shed", fallback=True),
@@ -98,10 +105,23 @@ def process_as_dict_of_int(section: SectionProxy) -> dict[int, int]:
     return {int(key): int(value) for key, value in section.items()}
 
 
-def process_as_dict_of_int_tuples(section: SectionProxy) -> dict[int, tuple[int, ...]]:
-    """Process as a dict of tuples of ints."""
+def process_color_table(section: SectionProxy) -> dict[int, tuple[int, int, int]]:
+    """Process the color table"""
+    result = {}
+    for key, value in section.items():
+        rgbs = tuple(int(intstr) for intstr in value.split(","))
+        if len(rgbs) != 3:
+            raise RuntimeError(
+                f"Cannot parse color {key}={value}; value must be 3 ints"
+            )
+        result[int(key)] = rgbs
+    return result
+
+
+def process_as_dict_of_int_sets(section: SectionProxy) -> dict[int, set[int]]:
+    """Process as a dict of sets of ints"""
     return {
-        int(key): tuple(int(shaft) for shaft in value.split(","))
+        int(key): {int(shaft) for shaft in value.split(",")}
         for key, value in section.items()
     }
 
@@ -112,11 +132,11 @@ def process_as_dict_of_float(section: SectionProxy) -> dict[int, float]:
 
 
 section_dispatcher = dict(
-    threading=process_as_dict_of_int_tuples,
-    tieup=process_as_dict_of_int_tuples,
-    treadling=process_as_dict_of_int_tuples,
-    liftplan=process_as_dict_of_int_tuples,
-    color_table=process_as_dict_of_int_tuples,
+    threading=process_as_dict_of_int_sets,
+    tieup=process_as_dict_of_int_sets,
+    treadling=process_as_dict_of_int_sets,
+    liftplan=process_as_dict_of_int_sets,
+    color_table=process_color_table,
     warp_colors=process_as_dict_of_int,
     weft_colors=process_as_dict_of_int,
     warp_spacing=process_as_dict_of_float,
