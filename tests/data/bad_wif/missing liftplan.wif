@@ -24,7 +24,7 @@ WARP THICKNESS=false
 WEFT THICKNESS=false
 
 [TEXT]
-Title=two color liftplan.wif
+Title=two color liftplan.dtx
 
 [THREADING]
 1=2

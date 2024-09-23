@@ -41,7 +41,7 @@ class SectionData:
             self.data.append(line)
 
 
-def read_dtx(f: TextIO, prune: bool = False) -> DrawdownData:
+def read_dtx(f: TextIO) -> DrawdownData:
     """Parse a dtx weaving file into DrawdownData
 
     Leading and trailing whitespace are stripped
@@ -50,8 +50,6 @@ def read_dtx(f: TextIO, prune: bool = False) -> DrawdownData:
     Parameters
     ----------
     f: a readable text file
-    prune: if true, unused shafts and treadles are removed from
-        threading, tieup, treadling, and liftplan
     """
     sections = dict()
     section_name = ""
@@ -101,7 +99,6 @@ def read_dtx(f: TextIO, prune: bool = False) -> DrawdownData:
         source_version = ".".join(source_version.split(".")[0:2])
 
     return DrawdownData(
-        pruned=prune,
         name=get_data_item(sections, "description", 0, "?"),
         color_range=(0, 255),
         is_rising_shed=True,

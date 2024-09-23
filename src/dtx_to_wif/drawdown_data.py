@@ -50,8 +50,6 @@ class DrawdownData:
 
     Parameters
     ----------
-    pruned: if true, entries for shaft and treadle=0 are removed from
-        tieup, treadline, and liftplan.
     name: original file name
     threading: dict of thread index: shafts
         where shaft is a set of shafts.
@@ -136,7 +134,6 @@ class DrawdownData:
         color_range[0] (min) >= color_range[1] (max)
     """
 
-    pruned: bool
     name: str
     threading: dict[int, set[int]]
     tieup: dict[int, set[int]]
@@ -186,19 +183,11 @@ class DrawdownData:
                 )
 
         # Clean up the threading, tieup, treadling, and liftplan dicts
-        # by putting keys in order and eliding {0} from values
-        # and resulting items that are empty
-        if self.pruned:
-            self.threading = self._prune_ints_set_dict(self.threading)
-            self.tieup = self._prune_ints_set_dict(self.tieup)
-            self.treadling = self._prune_ints_set_dict(self.treadling)
-            self.liftplan = self._prune_ints_set_dict(self.liftplan)
-
-        else:
-            self.threading = self._clean_ints_set_dict(self.threading)
-            self.tieup = self._clean_ints_set_dict(self.tieup)
-            self.treadling = self._clean_ints_set_dict(self.treadling)
-            self.liftplan = self._clean_ints_set_dict(self.liftplan)
+        # by putting keys in order and eliding default values
+        self.threading = self._clean_ints_set_dict(self.threading)
+        self.tieup = self._clean_ints_set_dict(self.tieup)
+        self.treadling = self._clean_ints_set_dict(self.treadling)
+        self.liftplan = self._clean_ints_set_dict(self.liftplan)
 
         # Clean up the color_table, which has no default values
         self.color_table = self._clean_dict(self.color_table, dataclasses._MISSING_TYPE)
@@ -318,9 +307,5 @@ class DrawdownData:
         return {key: data[key] for key in sorted(data) if data[key] != default_value}
 
     def _clean_ints_set_dict(self, data: dict[int, set[int]]) -> dict[int, set[int]]:
-        """Sort by keys and remove items whose value is empty or just {0}."""
+        """Sort by keys and remove items with default value ({} or {0})."""
         return {key: data[key] for key in sorted(data) if bool(data[key] - {0})}
-
-    def _prune_ints_set_dict(self, data: dict[int, set[int]]) -> dict[int, set[int]]:
-        """Sort by keys, remove 0 from values, remove empty items."""
-        return {key: data[key] - {0} for key in sorted(data) if bool(data[key] - {0})}

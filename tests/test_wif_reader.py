@@ -12,24 +12,22 @@ bad_wif_dir = datadir / "bad_dtx"
 
 
 class TestWifReader(unittest.TestCase):
-    def test_wif_reader(self):
-        for prune in (False, True):
-            for dtx_file in basic_dtx_dir.glob("*.dtx"):
-                with self.subTest(file=dtx_file.stem, prune=prune):
-                    wif_file = datadir / "desired_basic_wif" / (dtx_file.stem + ".wif")
-                    with open(dtx_file, "r") as f:
-                        parsed_dtx = read_dtx(f, prune=prune)
-                    with open(wif_file, "r") as f:
-                        parsed_wif = read_wif(f, prune=prune)
-                    assert parsed_dtx == parsed_wif
+    def test_wif_reader_compared_to_dtx_reader(self):
+        for dtx_path in basic_dtx_dir.glob("*.dtx"):
+            with self.subTest(file=dtx_path.stem):
+                wif_path = datadir / "desired_basic_wif" / (dtx_path.stem + ".wif")
+                with open(dtx_path, "r") as f:
+                    parsed_dtx = read_dtx(f)
+                with open(wif_path, "r") as f:
+                    parsed_wif = read_wif(f)
+                assert parsed_dtx == parsed_wif
 
     def test_read_bad_files(self):
-        for prune in (False, True):
-            for dtx_file_path in bad_wif_dir.rglob("*.wif"):
-                with self.subTest(file=dtx_file_path.name, prune=prune):
-                    with open(dtx_file_path, "r") as f:
-                        with pytest.raises(RuntimeError):
-                            read_dtx(f, prune=prune)
+        for dtx_path_path in bad_wif_dir.rglob("*.wif"):
+            with self.subTest(file=dtx_path_path.name):
+                with open(dtx_path_path, "r") as f:
+                    with pytest.raises(RuntimeError):
+                        read_dtx(f)
 
 
 if __name__ == "__main__":

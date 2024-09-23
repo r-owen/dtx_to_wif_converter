@@ -20,7 +20,7 @@ WifBoolDict = {
 }
 
 
-def read_wif(f: TextIO, prune: bool) -> DrawdownData:
+def read_wif(f: TextIO) -> DrawdownData:
     """Parse a wif weaving file into DrawdownData
 
     Leading and trailing whitespace are stripped
@@ -29,8 +29,6 @@ def read_wif(f: TextIO, prune: bool) -> DrawdownData:
     Parameters
     ----------
     f: a readable text file
-    prune: if true, unused shafts and treadles are removed from
-        threading, tieup, treadling, and liftplan
     """
     raw_data = ConfigParser()
     raw_data.read_file(f)
@@ -88,7 +86,6 @@ def read_wif(f: TextIO, prune: bool) -> DrawdownData:
             )
 
     return DrawdownData(
-        pruned=prune,
         name=raw_data.get("text", "title", fallback="?"),
         color_range=color_range,  # type: ignore
         is_rising_shed=raw_data.getboolean("weaving", "rising shed", fallback=True),

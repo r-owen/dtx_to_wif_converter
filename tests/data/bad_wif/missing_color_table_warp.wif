@@ -24,7 +24,7 @@ WARP THICKNESS=false
 WEFT THICKNESS=false
 
 [TEXT]
-Title=two color single treadles.wif
+Title=two color single treadles.dtx
 
 [THREADING]
 1=2

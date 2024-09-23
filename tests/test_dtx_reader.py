@@ -13,12 +13,11 @@ class TestDtxReader(unittest.TestCase):
     def test_read_bad_files(self):
         # Note: a few errors are not possible in dtx files,
         # since the data is in lists, not dicts. Test what we can.
-        for prune in (False, True):
-            for dtx_file_path in bad_dtx_dir.rglob("*.dtx"):
-                with self.subTest(file=dtx_file_path.name, prune=prune):
-                    with open(dtx_file_path, "r") as f:
-                        with pytest.raises(RuntimeError):
-                            read_dtx(f, prune=prune)
+        for dtx_file_path in bad_dtx_dir.rglob("*.dtx"):
+            with self.subTest(file=dtx_file_path.name):
+                with open(dtx_file_path, "r") as f:
+                    with pytest.raises(RuntimeError):
+                        read_dtx(f)
 
 
 if __name__ == "__main__":

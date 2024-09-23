@@ -50,7 +50,7 @@ def run_dtx_to_wif() -> None:
 
         try:
             with open(infile, "r") as f:
-                drawdown = read_dtx(f, prune=False)
+                drawdown = read_dtx(f)
             with open(outfile, "w") as f:
                 write_wif(f, drawdown)
         except Exception:
