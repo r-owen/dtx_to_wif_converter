@@ -4,7 +4,7 @@ import warnings
 from configparser import ConfigParser, SectionProxy
 from typing import TextIO
 
-from .drawdown_data import DrawdownData, WarpWeftData
+from .pattern_data import PatternData, WarpWeftData
 
 # Valid WIF bool string values (cast to lowercase)
 # and associated bool value
@@ -20,8 +20,8 @@ WifBoolDict = {
 }
 
 
-def read_wif(f: TextIO) -> DrawdownData:
-    """Parse a wif weaving file into DrawdownData
+def read_wif(f: TextIO) -> PatternData:
+    """Parse a wif weaving file into PatternData
 
     Leading and trailing whitespace are stripped
     and blank lines are ignored.
@@ -85,7 +85,7 @@ def read_wif(f: TextIO) -> DrawdownData:
                 f"COLOR PALETTE: RANGE {color_range} must contain two values"
             )
 
-    return DrawdownData(
+    return PatternData(
         name=raw_data.get("text", "title", fallback="?"),
         color_range=color_range,  # type: ignore
         is_rising_shed=raw_data.getboolean("weaving", "rising shed", fallback=True),

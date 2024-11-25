@@ -3,7 +3,7 @@ __all__ = ["read_dtx"]
 import re
 from typing import TextIO
 
-from .drawdown_data import DrawdownData, WarpWeftData
+from .pattern_data import PatternData, WarpWeftData
 
 UnitFiberSpacing = 0.053  # cm
 DefaultIntSpacing = 4
@@ -16,7 +16,7 @@ DtxToWifSectionNames = {
 
 
 class SectionData:
-    """Raw data for a section of a drawdown file.
+    """Raw data for a section of a pattern file.
 
     The fields are:
     • metadata: a dict of name: value (as a str, or None if no value)
@@ -41,8 +41,8 @@ class SectionData:
             self.data.append(line)
 
 
-def read_dtx(f: TextIO) -> DrawdownData:
-    """Parse a dtx weaving file into DrawdownData
+def read_dtx(f: TextIO) -> PatternData:
+    """Parse a dtx weaving file into PatternData
 
     Leading and trailing whitespace are stripped
     and blank lines are ignored.
@@ -98,7 +98,7 @@ def read_dtx(f: TextIO) -> DrawdownData:
         # to match what FiberWorks writes to WIF
         source_version = ".".join(source_version.split(".")[0:2])
 
-    return DrawdownData(
+    return PatternData(
         name=get_data_item(sections, "description", 0, "?"),
         color_range=(0, 255),
         is_rising_shed=True,

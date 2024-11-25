@@ -50,13 +50,13 @@ def run_dtx_to_wif() -> None:
 
         try:
             with open(infile, "r") as f:
-                drawdown = read_dtx(f)
+                pattern = read_dtx(f)
             with open(outfile, "w") as f:
-                write_wif(f, drawdown)
+                write_wif(f, pattern)
         except Exception:
             traceback.print_exc()
             print(f"Failed to write {outfile}")
             continue
 
         if args.verbose:
-            print(drawdown)
+            print(pattern)

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-__all__ = ["DrawdownData", "DrawdownType", "WarpWeftData"]
+__all__ = ["PatternData", "TreadlingType", "WarpWeftData"]
 
 import dataclasses
 import enum
@@ -9,7 +9,7 @@ from typing import Any, TypeVar
 ValueType = TypeVar("ValueType")
 
 
-class DrawdownType(enum.Enum):
+class TreadlingType(enum.Enum):
     SingleTreadle = enum.auto()
     MultiTreadle = enum.auto()
     Liftplan = enum.auto()
@@ -21,9 +21,9 @@ class WarpWeftData:
 
     Parameters
     ----------
-    threads: number of threads. DrawdownData increases the value if needed,
+    threads: number of threads. PatternData increases the value if needed,
         so the default value of 0 results in the minimum required
-        to satisfy the drawdown.
+        to satisfy the weaving pattern.
     color: default color index (index into color table)
     color_rgb: default color as r,g,b
     spacing: default thread spacing
@@ -40,8 +40,8 @@ class WarpWeftData:
 
 
 @dataclasses.dataclass
-class DrawdownData:
-    """Data for a drawdown.
+class PatternData:
+    """Data for a weaving pattern.
 
     The contents and format are intended to match the WIF specification.
     Thus indices are 1-based.
@@ -101,7 +101,8 @@ class DrawdownData:
     Thus you can set each of these to 0 (the default) to have them set to
     the smallest value required. The only reason to specify a value larger
     than the actual number of shafts or treadles is as a placeholder for an
-    incomplete drawdown.
+    incomplete weaving pattern--one you are working on and have not yet
+    provided all the threadings or treadlings.
 
     * Warp/weft colors, ``spacing``, and ``thickness`` have keys
     sorted, and default values are deleted.
@@ -212,9 +213,9 @@ class DrawdownData:
                 len(treadles) for treadles in self.treadling.values()
             )
             if max_num_treadles_per_pick == 1:
-                self.drawdown_type = DrawdownType.SingleTreadle
+                self.threadling_type = TreadlingType.SingleTreadle
             else:
-                self.drawdown_type = DrawdownType.MultiTreadle
+                self.threadling_type = TreadlingType.MultiTreadle
             self.weft.threads = max(len(self.treadling), self.weft.threads)
 
             max_treadle_ind_from_treadling = max(
@@ -227,7 +228,7 @@ class DrawdownData:
                 )
 
         elif self.liftplan:
-            self.drawdown_type = DrawdownType.Liftplan
+            self.threadling_type = TreadlingType.Liftplan
             # There may be shafts in the liftplan that were not in the tieup
             max_shafts_in_liftplan = max(
                 max(shafts) for shafts in self.liftplan.values()

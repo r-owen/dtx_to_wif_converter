@@ -1,7 +1,7 @@
 import pathlib
 import unittest
 
-from dtx_to_wif import DrawdownType, WarpWeftData, read_dtx, read_wif
+from dtx_to_wif import TreadlingType, WarpWeftData, read_dtx, read_wif
 
 rootdir = pathlib.Path(__file__).parent.parent
 datadir = rootdir / "tests" / "data"
@@ -62,7 +62,7 @@ SpecificData = {
         "source_version": "4.2",
         "num_shafts": 4,
         "num_treadles": 4,
-        "drawdown_type": DrawdownType.Liftplan,
+        "threadling_type": TreadlingType.Liftplan,
     },
     "many color multiple treadles and zeros": {
         "name": "many color multiple treadles and zeros.dtx",
@@ -110,7 +110,7 @@ SpecificData = {
         "source_version": "4.2",
         "num_shafts": 4,
         "num_treadles": 6,
-        "drawdown_type": DrawdownType.MultiTreadle,
+        "threadling_type": TreadlingType.MultiTreadle,
     },
 }
 

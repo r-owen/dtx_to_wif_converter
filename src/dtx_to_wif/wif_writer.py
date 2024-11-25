@@ -2,7 +2,7 @@ __all__ = ["write_wif"]
 
 from typing import Any, TextIO
 
-from .drawdown_data import DrawdownData
+from .pattern_data import PatternData
 
 
 def as_wif_bool(value: Any) -> str:
@@ -14,7 +14,7 @@ def as_wif_bool(value: Any) -> str:
     return "true" if value else "false"
 
 
-def write_wif(f: TextIO, data: DrawdownData) -> None:
+def write_wif(f: TextIO, data: PatternData) -> None:
     """Write a WIF file from parsed dtx data to the specified file.
 
     Parameters
