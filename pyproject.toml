@@ -28,6 +28,13 @@ dtx_to_wif = "dtx_to_wif:run_dtx_to_wif"
 Homepage = "https://github.com/r-owen/dtx_to_wif_converter"
 Issues = "https://github.com/r-owen/dtx_to_wif_converter/issues"
 
+# Needed due to including py.typed below
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"dtx_to_wif" = ["py.typed"]
+
 [tool.setuptools_scm]
 write_to = "src/dtx_to_wif/version.py"
 write_to_template = """
