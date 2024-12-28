@@ -64,8 +64,8 @@ class PatternData:
         of treadles.
         Entries with value () or (0,) are removed in postprocessing.
         Omitted entries raise no shafts.
-    liftplan: list dict of pick: shafts where shafts is a set
-        of-based shafts. Omitted picks lift nothing.
+    liftplan: dict of pick index: shafts where shafts is a set
+        of 1-based shafts. Omitted picks lift nothing.
         Entries with value () or (0,) are removed in postprocessing.
         Omitted entries raise no shafts.
     color_table: dict of color index: color tuple, where each color
