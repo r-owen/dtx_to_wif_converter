@@ -26,7 +26,7 @@ Run your [terminal application](#terminal-applications).
 
 Type:
 
-`$ dtx_to_wif path1 path2 ...`
+`dtx_to_wif path1 path2 ...`
 
 where each `path` is the path to a .dtx file or a directory containing .dtx files. On macOS, if you drag a file or folder from Finder onto your Terminal, the path will be typed for you. Windows may well do the same thing with its file browser.
 
