@@ -1,9 +1,10 @@
 import pathlib
 import unittest
+from typing import Any
 
 import pytest
 
-from dtx_to_wif import read_dtx, read_wif
+from dtx_to_wif import TreadlingType, read_dtx, read_wif
 
 rootdir = pathlib.Path(__file__).parent.parent
 datadir = rootdir / "tests" / "data"
@@ -23,11 +24,41 @@ class TestWifReader(unittest.TestCase):
                 assert parsed_dtx == parsed_wif
 
     def test_read_bad_files(self):
-        for dtx_path_path in bad_wif_dir.rglob("*.wif"):
-            with self.subTest(file=dtx_path_path.name):
-                with open(dtx_path_path, "r") as f:
+        for wif_path_path in bad_wif_dir.rglob("*.wif"):
+            with self.subTest(file=wif_path_path.name):
+                with open(wif_path_path, "r") as f:
                     with pytest.raises(RuntimeError):
-                        read_dtx(f)
+                        read_wif(f)
+
+    def assert_dicts_of_float_almost_equal(
+        self, dict1: dict[Any, float], dict2: dict[Any, float]
+    ) -> None:
+        assert set(dict1.keys()) == set(dict2.keys())
+        for key in dict1:
+            assert dict1[key] == pytest.approx(dict2[key])
+
+    def test_default_values(self):
+        wif_path = datadir / "basic_wif" / "treadles with defaults.wif"
+        with open(wif_path, "r") as f:
+            parsed_wif = read_wif(f)
+        assert parsed_wif.liftplan == {}
+        assert parsed_wif.tieup == {1: {1}, 2: {2, 4}}
+        assert parsed_wif.treadling == {1: {1, 6}, 2: {5}, 3: {0, 2, 5}}
+        assert parsed_wif.treadling_type == TreadlingType.MultiTreadle
+        assert parsed_wif.warp_colors == {2: 4, 5: 2}
+        assert parsed_wif.weft_colors == {3: 10, 5: 7}
+        self.assert_dicts_of_float_almost_equal(
+            parsed_wif.warp_spacing, {2: 0.159, 4: 0.053}
+        )
+        self.assert_dicts_of_float_almost_equal(
+            parsed_wif.weft_spacing, {1: 0.053, 2: 0.106}
+        )
+
+    def test_default_liftplan_values(self):
+        wif_path = datadir / "basic_wif" / "liftplan with defaults.wif"
+        with open(wif_path, "r") as f:
+            parsed_wif = read_wif(f)
+        assert parsed_wif.liftplan == {1: {1, 2, 4}, 4: {0, 3, 4}}
 
 
 if __name__ == "__main__":

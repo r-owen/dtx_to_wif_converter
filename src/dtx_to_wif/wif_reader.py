@@ -99,14 +99,16 @@ def read_wif(f: TextIO) -> PatternData:
 
 def process_as_dict_of_int(section: SectionProxy) -> dict[int, int]:
     """Process as a dict of int: int"""
-    return {int(key): int(value) for key, value in section.items()}
+    return {
+        int(key): int(value.strip()) for key, value in section.items() if value.strip()
+    }
 
 
 def process_color_table(section: SectionProxy) -> dict[int, tuple[int, int, int]]:
     """Process the color table"""
     result = {}
     for key, value in section.items():
-        rgbs = tuple(int(intstr) for intstr in value.split(","))
+        rgbs = tuple(int(intstr.strip()) for intstr in value.split(","))
         if len(rgbs) != 3:
             raise RuntimeError(
                 f"Cannot parse color {key}={value}; value must be 3 ints"
@@ -118,14 +120,19 @@ def process_color_table(section: SectionProxy) -> dict[int, tuple[int, int, int]
 def process_as_dict_of_int_sets(section: SectionProxy) -> dict[int, set[int]]:
     """Process as a dict of sets of ints"""
     return {
-        int(key): {int(shaft) for shaft in value.split(",")}
+        int(key): {int(shaft.strip()) for shaft in value.split(",")}
         for key, value in section.items()
+        if value.strip()
     }
 
 
 def process_as_dict_of_float(section: SectionProxy) -> dict[int, float]:
     """Process as a dict of int str: float str"""
-    return {int(key): float(value) for key, value in section.items()}
+    return {
+        int(key): float(value.strip())
+        for key, value in section.items()
+        if value.strip()
+    }
 
 
 section_dispatcher = dict(
