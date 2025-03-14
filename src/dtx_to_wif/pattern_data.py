@@ -213,9 +213,9 @@ class PatternData:
                 len(treadles) for treadles in self.treadling.values()
             )
             if max_num_treadles_per_pick == 1:
-                self.threadling_type = TreadlingType.SingleTreadle
+                self.treadling_type = TreadlingType.SingleTreadle
             else:
-                self.threadling_type = TreadlingType.MultiTreadle
+                self.treadling_type = TreadlingType.MultiTreadle
             self.weft.threads = max(len(self.treadling), self.weft.threads)
 
             max_treadle_ind_from_treadling = max(
@@ -228,7 +228,7 @@ class PatternData:
                 )
 
         elif self.liftplan:
-            self.threadling_type = TreadlingType.Liftplan
+            self.treadling_type = TreadlingType.Liftplan
             # There may be shafts in the liftplan that were not in the tieup
             max_shafts_in_liftplan = max(
                 max(shafts) for shafts in self.liftplan.values()

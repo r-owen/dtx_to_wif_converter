@@ -62,7 +62,7 @@ SpecificData = {
         "source_version": "4.2",
         "num_shafts": 4,
         "num_treadles": 4,
-        "threadling_type": TreadlingType.Liftplan,
+        "treadling_type": TreadlingType.Liftplan,
     },
     "many color multiple treadles and zeros": {
         "name": "many color multiple treadles and zeros.dtx",
@@ -110,7 +110,7 @@ SpecificData = {
         "source_version": "4.2",
         "num_shafts": 4,
         "num_treadles": 6,
-        "threadling_type": TreadlingType.MultiTreadle,
+        "treadling_type": TreadlingType.MultiTreadle,
     },
 }
 
