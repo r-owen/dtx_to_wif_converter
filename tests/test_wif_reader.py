@@ -1,11 +1,10 @@
-import pathlib
+import importlib.resources
 import unittest
 from typing import Any
 
 from dtx_to_wif import TreadlingType, read_dtx, read_wif
 
-rootdir = pathlib.Path(__file__).parent.parent
-datadir = rootdir / "tests" / "data"
+datadir = importlib.resources.files("dtx_to_wif") / "../test_data"
 basic_dtx_dir = datadir / "basic_dtx"
 bad_wif_dir = datadir / "bad_dtx"
 

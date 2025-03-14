@@ -1,18 +1,18 @@
+import importlib.resources
 import pathlib
 import shutil
 import subprocess
 import tempfile
 import unittest
 
-rootdir = pathlib.Path(__file__).parent.parent
-datadir = rootdir / "tests" / "data"
+datadir = importlib.resources.files("dtx_to_wif") / "../test_data"
 
 
 class TestDtxToWif(unittest.TestCase):
     def test_dtx_to_wif(self):
         cmdname = "dtx_to_wif"
-        # Copy tests/data to a temp dir and run dtx_to_wif on the copied files,
-        # to avoid writing files to tests/data
+        # Copy test_data to a temp dir and run dtx_to_wif on the copied files,
+        # to avoid writing files to test_data
         with tempfile.TemporaryDirectory() as tempdirname:
             tempdir = pathlib.Path(tempdirname)
             for subdirname in ("basic_dtx", "desired_basic_wif"):

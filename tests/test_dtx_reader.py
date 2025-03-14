@@ -1,10 +1,9 @@
-import pathlib
+import importlib.resources
 import unittest
 
 from dtx_to_wif import read_dtx
 
-rootdir = pathlib.Path(__file__).parent.parent
-bad_dtx_dir = rootdir / "tests" / "data" / "bad_dtx"
+bad_dtx_dir = importlib.resources.files("dtx_to_wif") / "../test_data/bad_dtx"
 
 
 class TestDtxReader(unittest.TestCase):
