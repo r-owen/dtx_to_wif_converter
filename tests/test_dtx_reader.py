@@ -1,8 +1,6 @@
 import pathlib
 import unittest
 
-import pytest
-
 from dtx_to_wif import read_dtx
 
 rootdir = pathlib.Path(__file__).parent.parent
@@ -16,7 +14,7 @@ class TestDtxReader(unittest.TestCase):
         for dtx_file_path in bad_dtx_dir.rglob("*.dtx"):
             with self.subTest(file=dtx_file_path.name):
                 with open(dtx_file_path, "r") as f:
-                    with pytest.raises(RuntimeError):
+                    with self.assertRaises(RuntimeError):
                         read_dtx(f)
 
 

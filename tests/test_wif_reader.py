@@ -2,8 +2,6 @@ import pathlib
 import unittest
 from typing import Any
 
-import pytest
-
 from dtx_to_wif import TreadlingType, read_dtx, read_wif
 
 rootdir = pathlib.Path(__file__).parent.parent
@@ -27,7 +25,7 @@ class TestWifReader(unittest.TestCase):
         for wif_path_path in bad_wif_dir.rglob("*.wif"):
             with self.subTest(file=wif_path_path.name):
                 with open(wif_path_path, "r") as f:
-                    with pytest.raises(RuntimeError):
+                    with self.assertRaises(RuntimeError):
                         read_wif(f)
 
     def assert_dicts_of_float_almost_equal(
@@ -35,7 +33,7 @@ class TestWifReader(unittest.TestCase):
     ) -> None:
         assert set(dict1.keys()) == set(dict2.keys())
         for key in dict1:
-            assert dict1[key] == pytest.approx(dict2[key])
+            self.assertAlmostEqual(dict1[key], dict2[key])
 
     def test_default_values(self):
         wif_path = datadir / "basic_wif" / "treadles with defaults.wif"
