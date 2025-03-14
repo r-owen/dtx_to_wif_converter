@@ -15,10 +15,9 @@ If you don't already have Python installed, or your installed version is too old
 
 Run the following terminal command to install the package:
 
-`pip install dtx_to_wif`
+`python -m pip install dtx_to_wif`
 
-On Windows watch the output carefully to see where it puts "dtx_to_wif.exe".
-It will be buried very deeply.
+Watch the output carefully to see where it installs `dtx_to_wif` (or, on Windows, `dtx_to_wif.exe`). On Windows it will be buried very deeply.
 
 The code is hosted on [github](https://github.com/r-owen/dtx_to_wif_converter). If you prefer to run from source, download the package, unpack it, cd to the source directory, and run: `pip install .`. (If you want to work on the software, or try it out without installing it, you can make a local "editable install" from downloaded source using `pip install -e .`).
 
@@ -27,11 +26,20 @@ Usage
 
 Run your [terminal application](#terminal-applications).
 
-Type the following (using the appropriate path prefix, if needed, e.g. on Windows):
+Type the following on macOS or unix:
 
-`dtx_to_wif path1 path2 ...`
+    dtx_to_wif path1 path2 ...  # on macOS or unix
 
-where each `path` is the path to a .dtx file or a directory containing .dtx files. On macOS, if you drag a file or folder from Finder onto your Terminal, the path will be typed for you. Windows may well do the same thing with its file browser.
+If this fails, specify the path to `dtx_to_wif` (as shown in the output from python -m pip install), or add its directory to the PATH.
+
+
+On Windows type:
+
+    <...path to dtx_to_wif...>dtx_to_wif.exe path1 path2 ...
+
+where `<...path to dtx_to_wif...>` is the path to the file, as shown in the output from `python -m pip install`.
+
+Each `path` argument is the path to a .dtx file or a directory (folder) containing .dtx files. On macOS, if you drag a file or folder from Finder onto your Terminal, the path will be typed for you.
 
 The program will scan each provided directory for files whose names end in ".dtx". This is a recursive search, meaning it looks in all directories inside the provided directory, no matter how deeply nested.
 
@@ -39,12 +47,10 @@ For each ".dtx" file the program finds, it will write a new WIF file in the same
 
 Specify `--help` (or `-h`) to print help.
 
-Note: on macOS or linux you can type `./dtx_to_wif` instead of `python dtx_to_wif`, but that is unlikely to work on Windows.
-
 Terminal Applications
 ---------------------
 
-The standard terminal applications are Terminal for macOS, and "cmd.exe" for Windows. There are other terminal applications available, but the standard ones will do just fine.
+The standard terminal applications are "Terminal" for macOS, and "cmd.exe" for Windows. Other terminal applications are available, but the standard ones are fine.
 
 WIF Details
 -----------
