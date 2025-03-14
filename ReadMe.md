@@ -17,6 +17,9 @@ Run the following terminal command to install the package:
 
 `pip install dtx_to_wif`
 
+On Windows watch the output carefully to see where it puts "dtx_to_wif.exe".
+It will be buried very deeply.
+
 The code is hosted on [github](https://github.com/r-owen/dtx_to_wif_converter). If you prefer to run from source, download the package, unpack it, cd to the source directory, and run: `pip install .`. (If you want to work on the software, or try it out without installing it, you can make a local "editable install" from downloaded source using `pip install -e .`).
 
 Usage
@@ -24,7 +27,7 @@ Usage
 
 Run your [terminal application](#terminal-applications).
 
-Type:
+Type the following (using the appropriate path prefix, if needed, e.g. on Windows):
 
 `dtx_to_wif path1 path2 ...`
 
@@ -41,7 +44,7 @@ Note: on macOS or linux you can type `./dtx_to_wif` instead of `python dtx_to_wi
 Terminal Applications
 ---------------------
 
-The standard terminal applications are Terminal for macOS and Windows Terminal for Windows. There are other terminal applications available, but the standard ones will do just fine.
+The standard terminal applications are Terminal for macOS, and "cmd.exe" for Windows. There are other terminal applications available, but the standard ones will do just fine.
 
 WIF Details
 -----------
