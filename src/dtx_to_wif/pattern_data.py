@@ -28,7 +28,7 @@ class WarpWeftData:
     color_rgb: default color as r,g,b
     spacing: default thread spacing
     thickness: default thread thickness
-    units: units for spacing and thickness\
+    units: units for spacing and thickness
     """
 
     threads: int = 0
@@ -46,7 +46,8 @@ class PatternData:
     The contents and format are intended to match the WIF specification.
     Thus indices are 1-based.
 
-    Note that 0 is the standard value for "does not exist".
+    Note that 0 is the standard value for "does not exist" or "does nothing".
+    For example shaft 0 holds no warp threads and treadle 0 lifts no shafts.
 
     Parameters
     ----------
@@ -57,11 +58,10 @@ class PatternData:
         Omitted entries are not threaded on any shaft.
         Note that is unusual, but supported by WIF, for a thread to be threaded
         on more than one shaft; that is why the values are sets.
-    tieup: list of treadles, where each treadle is a set of shafts.
+    tieup: dict of treadle: shaft set
         Entries with value () or (0,) are removed in postprocessing.
         Omitted entries raise no shafts.
-    treadling: dict of pick index: treadles, where treadles is a set
-        of treadles.
+    treadling: dict of pick index: treadle set
         Entries with value () or (0,) are removed in postprocessing.
         Omitted entries raise no shafts.
     liftplan: dict of pick index: shafts where shafts is a set
