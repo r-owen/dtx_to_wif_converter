@@ -41,7 +41,7 @@ class SectionData:
             self.data.append(line)
 
 
-def read_dtx(f: TextIO) -> PatternData:
+def read_dtx(f: TextIO, filename: str = "?") -> PatternData:
     """Parse a dtx weaving file into PatternData
 
     Leading and trailing whitespace are stripped
@@ -49,7 +49,11 @@ def read_dtx(f: TextIO) -> PatternData:
 
     Parameters
     ----------
-    f: a readable text file
+    f : TextIO
+        The dtx file.
+    filename : str
+        The file name. Usually ignored, but used as the pattern name
+        if the dtx file does not have a "description" section.
     """
     sections = dict()
     section_name = ""
@@ -99,7 +103,7 @@ def read_dtx(f: TextIO) -> PatternData:
         source_version = ".".join(source_version.split(".")[0:2])
 
     return PatternData(
-        name=get_data_item(sections, "description", 0, "?"),
+        name=get_data_item(sections, "description", 0, filename),
         color_range=(0, 255),
         is_rising_shed=True,
         source_program="Fiberworks PCW",
