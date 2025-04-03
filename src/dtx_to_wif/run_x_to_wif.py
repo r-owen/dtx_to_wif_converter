@@ -1,30 +1,11 @@
 __all__ = ["run_dtx_to_wif", "run_wpo_to_wif"]
 
 import argparse
-import dataclasses
 import pathlib
 import traceback
-from collections.abc import Callable
-from typing import Any
 
-from .dtx_reader import read_dtx
-from .pattern_data import PatternData
+from .pattern_reader import SupportedFileSuffixes, read_pattern_file
 from .wif_writer import write_wif
-from .wpo_reader import read_wpo
-
-
-@dataclasses.dataclass
-class ReaderInfo:
-    reader: Callable[[Any, str], PatternData]
-    is_binary: bool
-    program_name: str
-
-
-# A dict of file suffix: ReaderInfo
-Readers = {
-    ".dtx": ReaderInfo(reader=read_dtx, is_binary=False, program_name="FiberWorks"),
-    ".wpo": ReaderInfo(reader=read_wpo, is_binary=True, program_name="WeavePoint"),
-}
 
 
 def run_x_to_wif(suffix: str) -> None:
@@ -37,16 +18,14 @@ def run_x_to_wif(suffix: str) -> None:
     Parameters
     ----------
     suffix : str
-        File suffix; must be one of the entries in Readers
+        File suffix; must be one of the entries in SupportedFileSuffixes
     """
-    if suffix not in Readers:
+    if suffix not in SupportedFileSuffixes:
+        supported_prefixes_str = ", ".join(sorted(SupportedFileSuffixes))
         raise NotImplementedError(
-            f"Cannot read {suffix} files: must be one of {Readers.keys()}"
+            f"Cannot read {suffix} files: must be one of {supported_prefixes_str}"
         )
-    reader_info = Readers[suffix]
-    parser = argparse.ArgumentParser(
-        description=f"Convert {reader_info.program_name} {suffix} files to WIF files"
-    )
+    parser = argparse.ArgumentParser(description=f"Convert {suffix} files to WIF files")
     parser.add_argument(
         "inpath", nargs="+", help=f"{suffix} files or directories of files to parse"
     )
@@ -83,8 +62,12 @@ def run_x_to_wif(suffix: str) -> None:
             print(f"Writing {outfile}")
 
         try:
-            with open(infile, "rb" if reader_info.is_binary else "r") as inf:
-                pattern = reader_info.reader(inf, infile.name)
+            pattern = read_pattern_file(infile)
+        except Exception:
+            traceback.print_exc()
+            print(f"Failed to read {infile}")
+            continue
+        try:
             with open(outfile, "w") as outf:
                 write_wif(outf, pattern)
         except Exception:

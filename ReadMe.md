@@ -56,6 +56,13 @@ Terminal Applications
 
 The standard terminal applications are "Terminal" for macOS, and "cmd.exe" for Windows. Other terminal applications are available, but the standard ones are fine.
 
+Use in Other Software
+---------------------
+
+To read a weaving pattern of any supported type, call `read_pattern_file` (for a file on disk) or `read_pattern_data` (for data as a string).
+
+To write wif pattern files call `write_wif`.
+
 WIF Details
 -----------
 
@@ -69,4 +76,4 @@ Limitations
 
 The WeavePoint .wpo reading code cannot read per-thread thickness or separation data.
 Due to this limitation I consider `wpo_to_wif` only marginally useful.
-My main use case for reading WeavePoint files is to support loom control software.
+The main use case for reading WeavePoint files is to support loom control software.

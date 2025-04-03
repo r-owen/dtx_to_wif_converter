@@ -70,8 +70,8 @@ def read_wpo(f: BinaryIO, filename: str) -> PatternData:
     threading = {key: set([value]) for key, value in read_dict_of_int(f).items()}
     warp_colors = {key: value + 1 for key, value in read_dict_of_int(f).items()}
     weft_colors = {key: value + 1 for key, value in read_dict_of_int(f).items()}
-    default_warp_color = warp_colors[len(warp_colors)]
-    default_weft_color = weft_colors[len(weft_colors)]
+    default_warp_color = warp_colors.get(len(warp_colors))
+    default_weft_color = weft_colors.get(len(weft_colors))
 
     treadling: dict[int, set[int]] = {}
     liftplan: dict[int, set[int]] = {}
