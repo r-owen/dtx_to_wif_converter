@@ -89,10 +89,7 @@ def read_wpo(f: BinaryIO, filename: str) -> PatternData:
     read_bytes(f, 66)  # ignore "translation grids"
 
     color_table_len = read_int(f, 1)
-    color_range = (0, 255)
-    if color_table_len < 255:
-        # Old file version with colors that range from 0-63
-        color_range = (0, 63)
+    color_range = (0, 255) if file_version >= 4 else (0, 63)
     color_table: dict[int, tuple[int, int, int]] = {
         i + 1: read_rgb(f) for i in range(color_table_len)
     }
@@ -145,10 +142,13 @@ def read_bitmask_sequence(
 
     The data format is:
 
-    * number of bytes of data, encoded as two bytes: MSB, LSB
-      unless num_masks is provided, in which these two length bytes are absent
-    * sequence of bitmasks, where each bitmask has just enough bytes
-      to hold "bits_per_mask" bits.
+    * number of bytes of data, encoded as two big-endian bytes: MSB, LSB,
+      unless num_masks is not None, in which case that data section should
+      not have 2 bytes of length. Tieup data is one section that does not have
+      2 length bytes, since the length is the number of treadles.
+    * sequence of bitmasks, where each bitmask has just enough bytes to hold
+      "bits_per_mask" bits. Bytes are in little-endian order (LSB, ..., MSB).
+      Shaft/treadle 1 is bit 1, shaft/treadle 2 is bit 2, etc.
 
     The result is a dict of 1-based index: set of 1-based ints representing
     high bits in the bitmask.
