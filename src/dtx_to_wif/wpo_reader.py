@@ -142,7 +142,7 @@ def read_bitmask_sequence(
 
     The data format is:
 
-    * number of bytes of data, encoded as two big-endian bytes: MSB, LSB,
+    * number of masks, encoded as two big-endian bytes: MSB, LSB,
       unless num_masks is not None, in which case that data section should
       not have 2 bytes of length. Tieup data is one section that does not have
       2 length bytes, since the length is the number of treadles.
@@ -161,14 +161,7 @@ def read_bitmask_sequence(
     bytes_per_mask = num_bytes_for_bits(bits_per_mask)
 
     if num_masks is None:
-        num_bytes = read_int(f, 2)
-        if num_bytes == 0:
-            return {}
-        if num_bytes % bytes_per_mask != 0:
-            raise RuntimeError(f"{num_bytes=} is not a multiple of {bytes_per_mask=}")
-        num_masks = num_bytes // bytes_per_mask
-    else:
-        num_bytes = num_masks * bytes_per_mask
+        num_masks = read_int(f, 2)
     masks = [read_int(f, bytes_per_mask, big_endian=False) for _ in range(num_masks)]
     return {i + 1: mask_to_int_set(mask) for i, mask in enumerate(masks)}
 
