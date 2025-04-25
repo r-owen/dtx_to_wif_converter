@@ -1,7 +1,6 @@
 Convert FiberWorks .dtx weaving pattern files to WIF 1.1
 
-This package can also convert WeavePoint .wpo files to WIF 1.1,
-though without per-fiber thickness or spacing information.
+This software can also convert WeavePoint .wpo files to WIF, though it cannot read fiber thickness or spacing information, so the conversion loses information.
 
 This runs as a command-line script written in Python. See Installation and Usage for instructions.
 
@@ -15,13 +14,13 @@ Installation
 
 Test if you have Python installed by running your [terminal application](#terminal-applications) and typing `python` at the command prompt. If this runs a Python interpreter and the displayed version is at least 3.7, then you are good to go.
 
-If you don't already have Python installed, or your installed version is too old, download the free installer from python.org and run it. Then repeat the test above, to be sure the installation was successful.
+If you don't already have Python installed, or your installed version is too old, download the free installer from python.org and run it (on Windows you may want to get Python from the Microsoft Store). Then repeat the test above, to be sure the installation was successful.
 
 Run the following terminal command to install the package:
 
 `python -m pip install dtx_to_wif`
 
-Watch the output carefully to see where it installs `dtx_to_wif` and `wpo_to_wif` (or, on Windows, `dtx_to_wif.exe` and `wpo_to_wif`). On Windows these will be buried very deeply.
+Watch the output carefully to see where it installs `dtx_to_wif` and `wpo_to_wif` (or, on Windows, `dtx_to_wif.exe` and `wpo_to_wif.exe`). On Windows these will be buried very deeply.
 
 The code is hosted on [github](https://github.com/r-owen/dtx_to_wif_converter). If you prefer to run from source, download the package, unpack it, cd to the source directory, and run: `pip install .`. (If you want to work on the software, or try it out without installing it, you can make a local "editable install" from downloaded source using `pip install -e .`).
 
