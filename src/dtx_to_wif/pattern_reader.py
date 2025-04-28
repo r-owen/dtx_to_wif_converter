@@ -31,13 +31,15 @@ SupportedFileSuffixes = set(Readers.keys())
 
 
 def read_pattern_data(data: str, suffix: str, name: str):
-    """Read a pattern from a data string.
+    """Read a weaving pattern from a data string.
+
+    For WeavePoint .wpo files, which are binary, encode the data as base64,
+    e.g. using `base64.b64decode(data_bytes)`.
 
     Parameters
     ----------
     data : str
-        Pattern data. For WeavePoint ".wpo" data, this must binary data
-        encoded as base64.
+        Pattern data. WeavePoint data must be encoded as base64.
     suffix : str
         Pattern file suffix (one of ".dtx", ".wif", ".wpo")
     name : str
