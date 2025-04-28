@@ -26,8 +26,10 @@ dtx_to_wif = "dtx_to_wif:run_dtx_to_wif"
 wpo_to_wif = "dtx_to_wif:run_wpo_to_wif"
 
 [project.urls]
-Homepage = "https://github.com/r-owen/dtx_to_wif_converter"
-Issues = "https://github.com/r-owen/dtx_to_wif_converter/issues"
+Homepage = "https://pypi.org/project/dtx-to-wif/"
+Documentation = "https://r-owen.github.io/dtx_to_wif/"
+Source = "https://github.com/r-owen/dtx_to_wif"
+Issues = "https://github.com/r-owen/dtx_to_wif/issues"
 
 [tool.setuptools_scm]
 write_to = "src/dtx_to_wif/version.py"
