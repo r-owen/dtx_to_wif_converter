@@ -1,0 +1,9 @@
+site_name: dtx_to_wif
+nav:
+  - Home: index.md
+  - Installing: installing.md
+  - Version Histsory: version_history.md
+theme:
+  name: readthedocs
+  features:
+    - color_mode: auto
