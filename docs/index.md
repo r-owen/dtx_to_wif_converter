@@ -5,7 +5,7 @@ You do not need a copy of FiberWorks or WeavePoint to use this software.
 
 Conversion is done using a [terminal](#terminal-applications). If you are not comfortable using a terminal, this may not be the right package for you.
 
-This package can also read .wif, .dtx, and .wpo files into an in-memory class, which is the same for all supported file formats.
+This package can also be used by weaving-related software to [read supported weaving pattern files](#reading-files-into-memory).
 
 ## Converting Files
 
@@ -19,11 +19,11 @@ Type the following on macOS or unix:
 
     dtx_to_wif path1 path2 ...
 
-If this fails, specify the path to `dtx_to_wif` (as shown when you installed the package), or add its directory to the PATH.
+If dtx_to_wif is not found, specify the path to it, as described in [installing](installing.md).
 
 On Windows type:
 
-    <...path to dtx_to_wif...>dtx_to_wif.exe path1 path2 ...
+    <...path to dtx_to_wif...>\dtx_to_wif.exe path1 path2 ...
 
 where `<...path to dtx_to_wif...>` is the path to the file, as shown when you installed `dtx_to_wif`.
 
@@ -40,19 +40,24 @@ If you run the command with option `-h` you will see all available options.
 
 ## Reading Files Into Memory
 
-This package can also read weaving pattern files into an in-memory representation, class `dtx_to_wif.PatternData`.
-This could be used by dobby loom control software, pattern visualization software, or weaving design software.
+dtx_to_wif can read .dtx, .wif, and .wpo pattern files into an instance of [dtx_to_wif.PatternData][dtx_to_wif.pattern_data.PatternData].
+This is used by [base_loom_server](https://r-owen.github.io/base_loom_server) dobby loom control software.
+It could also be used by pattern visualization software and weaving design software.
 
-To read a weaving pattern file that is in any supported format, call `dtx_to_wif.read_pattern_file(filepath)`.
+To read a weaving pattern from a file, call [dtx_to_wif.read_pattern_file][dtx_to_wif.pattern_reader.read_pattern_file]. To read a weaving pattern from a string, call [dtx_to_wif.read_pattern_data][dtx_to_wif.pattern_reader.read_pattern_data].
 
-To read a weaving pattern file from a string, call `dtx_to_wif.read_pattern_data(data: str, suffix: str, name: str)`.
-Encode WeavePoint files, which are binary, as base64. The suffix must include a leading period, e.g. ".dtx".
-
-To write `dtx_to_wif.PatternData` to a WIF file, call `write_wif`.
+To write [dtx_to_wif.PatternData][dtx_to_wif.pattern_data.PatternData] to a WIF file, call [dtx_to_wif.write_wif][dtx_to_wif.wif_writer.write_wif].
 
 ## Terminal Applications
 
-The standard terminal applications are "Terminal" for macOS, and "cmd.exe" for Windows. Other terminal applications are available, but the standard ones are fine.
+The standard terminal applications are `Terminal` for macOS, and `cmd.exe` for Windows. Other terminal applications are available, but the standard ones are fine.
+
+## Links
+
+* [PyPi](https://pypi.org/project/dtx-to-wif/)
+* [Documentation](https://r-owen.github.io/dtx_to_wif/)
+* [Source Code](https://github.com/r-owen/dtx_to_wif)
+* [Issue Tracker](https://github.com/r-owen/dtx_to_wif/issues)
 
 ## Limitations
 
@@ -70,4 +75,4 @@ The main use case for reading WeavePoint files is to support dobby loom control 
 
 ## License
 
-This software is licensed under the MIT license; see license.txt for details.
+This software is licensed under the MIT license. See [license.txt](https://github.com/r-owen/dtx_to_wif/blob/main/license.txt) for details.

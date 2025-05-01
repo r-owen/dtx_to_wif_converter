@@ -23,17 +23,12 @@ WifBoolDict = {
 def read_wif(f: TextIO, filename: str = "?") -> PatternData:
     """Parse a wif weaving file into PatternData
 
-    Leading and trailing whitespace are stripped
-    and blank lines are ignored.
+    Leading and trailing whitespace are stripped and blank lines are ignored.
 
-    Parameters
-    ----------
-    f : TextIO
-        The wif file.
-    filename : str
-        The file name. Usually ignored, but used as the pattern name
-        if the wif file does not have a Title line in the [TEXT] section.
-
+    Args:
+        f: The wif file.
+        filename: The file name. Usually ignored, but used as the pattern name
+            if the wif file does not have a Title line in the [TEXT] section.
     """
     raw_data = ConfigParser()
     raw_data.read_file(f)

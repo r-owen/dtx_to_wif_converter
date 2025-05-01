@@ -17,18 +17,17 @@ class TreadlingType(enum.Enum):
 
 @dataclasses.dataclass
 class WarpWeftData:
-    """Information for the WARP or WEFT sections of a wif
+    """Information for the WARP or WEFT sections of a WIF file.
 
-    Parameters
-    ----------
-    threads: number of threads. PatternData increases the value if needed,
-        so the default value of 0 results in the minimum required
-        to satisfy the weaving pattern.
-    color: default color index (index into color table)
-    color_rgb: default color as r,g,b
-    spacing: default thread spacing
-    thickness: default thread thickness
-    units: units for spacing and thickness
+    Args:
+        threads: The number of threads. PatternData increases the value,
+            if needed, so the default value of 0 results in
+            the minimum required to satisfy the weaving pattern.
+        color: Default color index (index into color table).
+        color_rgb: Default color as r,g,b.
+        spacing: Default thread spacing.
+        thickness: Default thread thickness.
+        units: Inits for spacing and thickness.
     """
 
     threads: int = 0
@@ -49,90 +48,81 @@ class PatternData:
     Note that 0 is the standard value for "does not exist" or "does nothing".
     For example shaft 0 holds no warp threads and treadle 0 lifts no shafts.
 
-    Parameters
-    ----------
-    name: original file name
-    threading: dict of thread index: shafts
-        where shaft is a set of shafts.
-        Entries with value () or (0,) are removed in postprocessing.
-        Omitted entries are not threaded on any shaft.
-        Note that is unusual, but supported by WIF, for a thread to be threaded
-        on more than one shaft; that is why the values are sets.
-    tieup: dict of treadle: shaft set
-        Entries with value () or (0,) are removed in postprocessing.
-        Omitted entries raise no shafts.
-    treadling: dict of pick index: treadle set
-        Entries with value () or (0,) are removed in postprocessing.
-        Omitted entries raise no shafts.
-    liftplan: dict of pick index: shafts where shafts is a set
-        of 1-based shafts. Omitted picks lift nothing.
-        Entries with value () or (0,) are removed in postprocessing.
-        Omitted entries raise no shafts.
-    color_table: dict of color index: color tuple, where each color
-        is a tuple of (r, g, b) values. The keys must include all integers
-        from 1 through len(color_table).
-    warp: warp data; see WarpWeftData
-    weft: weft data; see WarpWeftData
-    warp_colors: color for each warp thread,
-        as a dict of thread index: index into color_table
-    warp_spacing: space each thread takes up,
-        as a dict of thread index: spacing
-    warp_thickness: thickness of each thread,
-        as a dict of thread index: thickness
-    weft_colors: color for each weft thread,
-        as a dict of thread index: index into color_table
-    weft_spacing: space each thread takes up,
-        as a dict of thread index: spacing
-    weft_thickness: thickness of each thread,
-        as a dict of thread index: thickness
-    color_range: minimum, maximum allowed color value (inclusive)
-    is_rising_shed: if true, shafts go up, if false, shafts go down
-    source_program: name of program that wrote the original file
-    source_version: version of pogram that wrote the original file
-    num_shafts: number of shafts
-    num_treadles: number of treadles
+    Args:
+        name: Original file name.
+        threading: Dict of thread index: shafts,
+            where shaft is a set of shafts.
+            Entries with value () or (0,) are removed in postprocessing.
+            Omitted entries are not threaded on any shaft.
+            Note that is unusual, but supported by WIF,
+            for a thread to be threaded on more than one shaft;
+            that is why the values are sets.
+        tieup: Dict of treadle: shaft set.
+            Entries with value () or (0,) are removed in postprocessing.
+            Omitted entries raise no shafts.
+        treadling: Dict of pick index: treadle set.
+            Entries with value () or (0,) are removed in postprocessing.
+            Omitted entries raise no shafts.
+        liftplan: Dict of pick index: shafts where shafts is a set
+            of 1-based shafts. Omitted picks lift nothing.
+            Entries with value () or (0,) are removed in postprocessing.
+            Omitted entries raise no shafts.
+        color_table: Dict of color index: color tuple,
+            where each color is a tuple of (r, g, b) values.
+            The keys must include all integers from 1 through len(color_table).
+        warp: Warp data; see WarpWeftData.
+        weft: Weft data; see WarpWeftData.
+        warp_colors: Color for each warp thread,
+            as a dict of thread index: index into color_table.
+        warp_spacing: Space each thread takes up,
+            as a dict of thread index: spacing.
+        warp_thickness: Thickness of each thread,
+            as a dict of thread index: thickness.
+        weft_colors: Color for each weft thread,
+            as a dict of thread index: index into color_table.
+        weft_spacing: Space each thread takes up,
+            as a dict of thread index: spacing.
+        weft_thickness: Thickness of each thread,
+            as a dict of thread index: thickness.
+        color_range: Minimum, maximum allowed color value (inclusive).
+        is_rising_shed: If true, shafts go up, if false, shafts go down.
+        source_program: Name of program that wrote the original file.
+        source_version: Version of pogram that wrote the original file.
+        num_shafts: Number of shafts.
+        num_treadles: Number of treadles.
 
-    Notes
-    -----
-    Many fields are cleaned up in postprocessing:
+    Note:
+        Many fields are cleaned up in postprocessing:
 
-    *  ``num_shafts`` and ``num_treadles`` are increased, if needed, based on
-    computation from ``threading``, ``tieup``, ``treadling``, and ``liftplan``.
-    Thus you can set each of these to 0 (the default) to have them set to
-    the smallest value required. The only reason to specify a value larger
-    than the actual number of shafts or treadles is as a placeholder for an
-    incomplete weaving pattern--one you are working on and have not yet
-    provided all the threadings or treadlings.
+        *  `num_shafts` and `num_treadles` are increased, if needed,
+          based on computation from `threading`, `tieup`, `treadling`,
+          and `liftplan`. Thus you can set each of these to 0 (the default)
+          to have them set to the smallest value required. The only reason to
+          specify a value larger than the actual number of shafts or treadles
+          is as a placeholder for an incomplete weaving pattern--one you are
+          working on and have not yet provided all threadings or treadlings.
 
-    * Warp/weft colors, ``spacing``, and ``thickness`` have keys
-    sorted, and default values are deleted.
+        * Warp/weft colors, `spacing`, and `thickness` have keys
+          sorted, and default values are deleted.
 
-    ``color_table`` has keys sorted.
+        `color_table` has keys sorted.
 
-    ``threading``, ``tieup``, ``treadling``, and ``liftplan`` have keys sorted,
-    and  entries with value () or (0,) are omitted, since those values mean
-    the same thing as no entry.
+        `threading`, `tieup`, `treadling`, and `liftplan`
+        have keys sorted and  entries with value () or (0,) removed,
+        since those values mean the same thing as no entry.
 
-    Raises
-    ------
-    RuntimeError
-        If there is missing treadling information. The data must
-        either include both of tieup and treadling, or else liftplan.
-    RuntimeError
-        If there are more treadles in treadling than in tieup.
-    RuntimeError
-        If any color values are out of range.
-    RuntimeError
-        If the color keys are not a complete set 1, 2, ... N
-        (though they don't have to sorted on input).
-    RuntimeError
-        If ``warp_colors`` or ``weft_colors`` is specified,
-        but not ``color_table``.
-    RuntimeError
-        If ``color_table`` is specified, but not ``color_range``.
-    RuntimeError
-        If ``color_range`` invalid: length != 2 or
-        color_range[0] (min) >= color_range[1] (max)
+    Raises:
+        RuntimeError: If there is missing treadling information. The data must
+            either include both of tieup and treadling, or else liftplan.
+        RuntimeError: If there are more treadles in treadling than in tieup.
+            If any color values are out of range.
+        RuntimeError: If the color keys are not a complete set 1, 2, ... N
+            (though they don't have to sorted on input).
+        RuntimeError: If `warp_colors` or `weft_colors` is specified,
+            but not `color_table`.
+        RuntimeError: If `color_table` is specified, but not `color_range`.
+        RuntimeError: If `color_range` invalid: length != 2 or
+            color_range[0] (min) >= color_range[1] (max)
     """
 
     name: str

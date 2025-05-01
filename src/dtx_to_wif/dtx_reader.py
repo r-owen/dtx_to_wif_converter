@@ -44,16 +44,12 @@ class SectionData:
 def read_dtx(f: TextIO, filename: str = "?") -> PatternData:
     """Parse a dtx weaving file into PatternData
 
-    Leading and trailing whitespace are stripped
-    and blank lines are ignored.
+    Leading and trailing whitespace are stripped and blank lines are ignored.
 
-    Parameters
-    ----------
-    f : TextIO
-        The dtx file.
-    filename : str
-        The file name. Usually ignored, but used as the pattern name
-        if the dtx file does not have a "description" section.
+    Args:
+        f: The dtx file.
+        filename: The file name. Usually ignored, but used as the pattern name
+            if the dtx file does not have a "description" section.
     """
     sections = dict()
     section_name = ""
@@ -253,13 +249,12 @@ def get_data_item(
 ) -> str:
     """Get one indexed element of SectionInfo.data.
 
-    Parameters
-    ----------
-    data: parsed dtx data; a dict of SectionInfo from parse_dtx_file
-    section_name: the name of the dtx section (lowercase)
-    index: the index of the data item
-    default: the value to return if the section does not exist,
-      or the index is out of range
+    Args:
+        data: Parsed dtx data; a dict of SectionInfo from parse_dtx_file.
+        section_name: The name of the dtx section (lowercase).
+        index: The index of the data item.
+        default: The value to return if the section does not exist,
+            or the index is out of range.
     """
     section_info = data.get(section_name)
     if section_info is None:
@@ -274,13 +269,12 @@ def get_metadata_item(
 ) -> str:
     """Get one named element of SectionData.metadata as a str
 
-    Parameters
-    ----------
-    data: parsed dtx data; a dict of SectionInfo from parse_dtx_file
-    section_name: the name of the dtx section (lowercase)
-    name: the name of the metadata item
-    default: the value to return if the section does not exists,
-      the metadata does not exist, or the metadata has value None
+    Args:
+        data: Parsed dtx data; a dict of SectionInfo from parse_dtx_file.
+        section_name: The name of the dtx section (lowercase).
+        name: The name of the metadata item.
+        default: The value to return if the section does not exists,
+            the metadata does not exist, or the metadata has value None.
     """
     section_info = data.get(section_name)
     if section_info is None:

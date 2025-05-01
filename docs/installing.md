@@ -2,7 +2,7 @@
 
 1. Check if you have Python installed.
 
-    Run your terminal application (called Terminal on macOS and cmd.exe on Windows).
+    Run your [terminal application](index.md/#terminal-applications).
 
     At the prompt type:
 
@@ -11,6 +11,9 @@
     If Python is installed, this will print a version number.
     If that version number is at least 3.7, you may skip the next step
     (though you might wish to upgrade your Python if it's very old).
+
+    (People who wish to contribute to this package should install Python 3.10 or later,
+    because mkdocs requires that to build documentation).
 
 2. If necessary, install [Python](https://www.python.org/downloads/) 3.7 or later.
 

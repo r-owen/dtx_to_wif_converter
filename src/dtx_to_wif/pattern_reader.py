@@ -36,14 +36,10 @@ def read_pattern_data(data: str, suffix: str, name: str):
     For WeavePoint .wpo files, which are binary, encode the data as base64,
     e.g. using `base64.b64decode(data_bytes)`.
 
-    Parameters
-    ----------
-    data : str
-        Pattern data. WeavePoint data must be encoded as base64.
-    suffix : str
-        Pattern file suffix (one of ".dtx", ".wif", ".wpo")
-    name : str
-        Pattern name. Typically the file name (including suffix).
+    Args:
+        data:  Pattern data. WeavePoint data must be encoded as base64.
+        suffix: Pattern file suffix: one of ".dtx", ".wif", ".wpo".
+        name: Pattern name. Typically the file name (including suffix).
     """
     suffix_lower = suffix.lower()
     reader_info = Readers.get(suffix_lower)
@@ -62,10 +58,8 @@ def read_pattern_data(data: str, suffix: str, name: str):
 def read_pattern_file(filepath: PathLike | str) -> PatternData:
     """Read a weaving pattern file
 
-    Parameters
-    ----------
-    filepath : PathLike | str
-        Path to file.
+    Args:
+        filepath: Path to file.
     """
     filepath = pathlib.Path(filepath)
     suffix_lower = filepath.suffix.lower()
