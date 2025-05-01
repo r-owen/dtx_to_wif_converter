@@ -52,20 +52,15 @@ class PatternData:
         name: Original file name.
         threading: Dict of thread index: shafts,
             where shaft is a set of shafts.
-            Entries with value () or (0,) are removed in postprocessing.
             Omitted entries are not threaded on any shaft.
-            Note that is unusual, but supported by WIF,
-            for a thread to be threaded on more than one shaft;
-            that is why the values are sets.
+            The values are sets of integers, instead of single integers,
+            because WIF supports threading on more than one shaft.
         tieup: Dict of treadle: shaft set.
-            Entries with value () or (0,) are removed in postprocessing.
             Omitted entries raise no shafts.
         treadling: Dict of pick index: treadle set.
-            Entries with value () or (0,) are removed in postprocessing.
             Omitted entries raise no shafts.
         liftplan: Dict of pick index: shafts where shafts is a set
             of 1-based shafts. Omitted picks lift nothing.
-            Entries with value () or (0,) are removed in postprocessing.
             Omitted entries raise no shafts.
         color_table: Dict of color index: color tuple,
             where each color is a tuple of (r, g, b) values.
@@ -105,11 +100,13 @@ class PatternData:
         * Warp/weft colors, `spacing`, and `thickness` have keys
           sorted, and default values are deleted.
 
-        `color_table` has keys sorted.
+        * `color_table` has keys sorted.
 
-        `threading`, `tieup`, `treadling`, and `liftplan`
-        have keys sorted and  entries with value () or (0,) removed,
-        since those values mean the same thing as no entry.
+        * `threading`, `tieup`, `treadling`, and `liftplan` have their
+          keys sorted in ascending order.
+          Also entries with value `{}` or `{0}` are removed,
+          since those values mean the same thing as no entry.
+          However, 0 is not removed from sets containing other values.
 
     Raises:
         RuntimeError: If there is missing treadling information. The data must
