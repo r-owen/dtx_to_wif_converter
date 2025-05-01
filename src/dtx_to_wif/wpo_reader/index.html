@@ -50,7 +50,7 @@
                 <li class="toctree-l1"><a class="reference internal" href="../../../version_history/">Version History</a>
                 </li>
               </ul>
-              <p class="caption"><span class="caption-text">API REFERENCE</span></p>
+              <p class="caption"><span class="caption-text">API Reference</span></p>
               <ul>
                   <li class="toctree-l1"><a class="reference internal" >dtx_to_wif</a>
     <ul>
@@ -320,7 +320,9 @@
 <span class="normal">209</span>
 <span class="normal">210</span>
 <span class="normal">211</span>
-<span class="normal">212</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;read_wpo&quot;</span><span class="p">]</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;read_wpo&quot;</span><span class="p">]</span>
 
 <span class="kn">import</span> <span class="nn">enum</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
@@ -357,9 +359,12 @@
 <span class="sd">    Does not read per-thread thickness and separation are not read,</span>
 <span class="sd">    because the company has not told me how to access that information.</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        f: A readable binary file.</span>
-<span class="sd">        filename: The file name. Used as the pattern name.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    f : BinaryIO</span>
+<span class="sd">        A readable binary file</span>
+<span class="sd">    filename : str</span>
+<span class="sd">        The file name. Used as the pattern name.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">id_code</span> <span class="o">=</span> <span class="n">read_int</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">id_code</span> <span class="o">!=</span> <span class="n">WPO_ID</span><span class="p">:</span>
@@ -488,8 +493,7 @@
 <span class="k">def</span> <span class="nf">read_bytes</span><span class="p">(</span><span class="n">f</span><span class="p">:</span> <span class="n">BinaryIO</span><span class="p">,</span> <span class="n">num_bytes</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span><div class="mkapi-source-link" id="dtx_to_wif.wpo_reader.read_bytes"><a href="../../../api/dtx_to_wif/wpo_reader/#dtx_to_wif.wpo_reader.read_bytes" title="Go to docs">docs</a></div>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Read exactly num_bytes bytes (possibly using multiple reads).</span>
 
-<span class="sd">    Raises:</span>
-<span class="sd">        EOFError: If EOF seen, and ValueError if num_bytes &lt; 1.</span>
+<span class="sd">    Raises EOFError if EOF seen, and ValueError if num_bytes &lt; 1.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">num_bytes</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">num_bytes</span><span class="si">=}</span><span class="s2"> must be positive&quot;</span><span class="p">)</span>

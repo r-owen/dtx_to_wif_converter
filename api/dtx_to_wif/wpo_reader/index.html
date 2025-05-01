@@ -50,7 +50,7 @@
                 <li class="toctree-l1"><a class="reference internal" href="../../../version_history/">Version History</a>
                 </li>
               </ul>
-              <p class="caption"><span class="caption-text">API REFERENCE</span></p>
+              <p class="caption"><span class="caption-text">API Reference</span></p>
               <ul class="current">
                   <li class="toctree-l1 current"><a class="reference internal current" >dtx_to_wif</a>
     <ul class="current">
@@ -109,7 +109,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
-          <li class="breadcrumb-item">API REFERENCE</li>
+          <li class="breadcrumb-item">API Reference</li>
           <li class="breadcrumb-item">dtx_to_wif</li>
       <li class="breadcrumb-item active">dtx_to_wif.wpo_reader</li>
     <li class="wy-breadcrumbs-aside">
@@ -230,7 +230,7 @@ because the company has not told me how to access that information.</p>
 <li>
 <p><span class="mkapi-item-name">f</span> : 
 <span class="mkapi-item-type"><span class="mkapi-tooltip" title="typing.BinaryIO">BinaryIO</span></span> <span class="mkapi-dash">&mdash;</span>
-A readable binary file.</p>
+A readable binary file</p>
 </li>
 <li>
 <p><span class="mkapi-item-name">filename</span> : 
@@ -409,6 +409,7 @@ high bits in the bitmask.</p>
 </p>
 <div class="mkapi-document">
 <p>Read exactly num_bytes bytes (possibly using multiple reads).</p>
+<p>Raises EOFError if EOF seen, and ValueError if num_bytes &lt; 1.</p>
 <p class="mkapi-section">
 <span class="mkapi-object-link">
 <span class="mkapi-section-toggle" title="Toggle raises">
@@ -420,12 +421,10 @@ high bits in the bitmask.</p>
 <div class="mkapi-section-content">
 <ul class="mkapi-item-list">
 <li>
-<p><span class="mkapi-item-name">EOFError</span>
- <span class="mkapi-dash">&mdash;</span>
-If EOF seen, and ValueError if num_bytes &lt; 1.</p>
+<p><span class="mkapi-item-type">ValueError</span></p>
 </li>
 <li>
-<p><span class="mkapi-item-type">ValueError</span></p>
+<p><span class="mkapi-item-type">EOFError</span></p>
 </li>
 <li>
 <p><span class="mkapi-item-type">RuntimeError</span></p>

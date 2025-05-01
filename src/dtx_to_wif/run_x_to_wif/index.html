@@ -50,7 +50,7 @@
                 <li class="toctree-l1"><a class="reference internal" href="../../../version_history/">Version History</a>
                 </li>
               </ul>
-              <p class="caption"><span class="caption-text">API REFERENCE</span></p>
+              <p class="caption"><span class="caption-text">API Reference</span></p>
               <ul>
                   <li class="toctree-l1"><a class="reference internal" >dtx_to_wif</a>
     <ul>
@@ -208,14 +208,14 @@
 <span class="k">def</span> <span class="nf">run_x_to_wif</span><span class="p">(</span><span class="n">suffix</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span><div class="mkapi-source-link" id="dtx_to_wif.run_x_to_wif.run_x_to_wif"><a href="../../../api/dtx_to_wif/run_x_to_wif/#dtx_to_wif.run_x_to_wif.run_x_to_wif" title="Go to docs">docs</a></div>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Command-line script to convert weaving pattern files to WIF format.</span>
 
-<span class="sd">    Note:</span>
-<span class="sd">        Tthe readers all accept opened files instead of file paths to support</span>
-<span class="sd">        data from a bytes or stream. For example base_loom_server receives</span>
-<span class="sd">        pattern data as a bytes, rather than a file on disk.</span>
+<span class="sd">    Note: the readers all accept opened files instead of file paths to support</span>
+<span class="sd">    data from a bytes or stream. For example base_loom_server receives</span>
+<span class="sd">    pattern data as a bytes, rather than a file on disk.</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        suffix: File suffix; must be one of the entries in</span>
-<span class="sd">        SupportedFileSuffixes.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    suffix : str</span>
+<span class="sd">        File suffix; must be one of the entries in SupportedFileSuffixes</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">suffix</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">SupportedFileSuffixes</span><span class="p">:</span>
         <span class="n">supported_prefixes_str</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">SupportedFileSuffixes</span><span class="p">))</span>

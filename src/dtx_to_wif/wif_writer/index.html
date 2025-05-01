@@ -50,7 +50,7 @@
                 <li class="toctree-l1"><a class="reference internal" href="../../../version_history/">Version History</a>
                 </li>
               </ul>
-              <p class="caption"><span class="caption-text">API REFERENCE</span></p>
+              <p class="caption"><span class="caption-text">API Reference</span></p>
               <ul>
                   <li class="toctree-l1"><a class="reference internal" >dtx_to_wif</a>
     <ul>
@@ -253,7 +253,8 @@
 <span class="normal">142</span>
 <span class="normal">143</span>
 <span class="normal">144</span>
-<span class="normal">145</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;write_wif&quot;</span><span class="p">]</span>
+<span class="normal">145</span>
+<span class="normal">146</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;write_wif&quot;</span><span class="p">]</span>
 
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">TextIO</span>
 
@@ -272,9 +273,10 @@
 <span class="k">def</span> <span class="nf">write_wif</span><span class="p">(</span><span class="n">f</span><span class="p">:</span> <span class="n">TextIO</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">PatternData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span><div class="mkapi-source-link" id="dtx_to_wif.wif_writer.write_wif"><a href="../../../api/dtx_to_wif/wif_writer/#dtx_to_wif.wif_writer.write_wif" title="Go to docs">docs</a></div>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Write a WIF file from parsed dtx data to the specified file.</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        f: File to write to, a writable file-like object.</span>
-<span class="sd">        data: Parsed data.</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    f: file to write to, a writable file-like object</span>
+<span class="sd">    data: parsed data</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
         <span class="sa">f</span><span class="s2">&quot;&quot;&quot;[WIF]</span>
