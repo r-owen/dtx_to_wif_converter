@@ -3,18 +3,21 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://r-owen.github.io/dtx_to_wif/installing/" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
     <title>Installing - dtx_to_wif</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../css/mkapi-common.css" rel="stylesheet" />
+        <link href="../css/mkapi-material.css" rel="stylesheet" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet" />
     
       <script>
         // Current page data
         var mkdocs_page_name = "Installing";
         var mkdocs_page_input_path = "installing.md";
-        var mkdocs_page_url = null;
+        var mkdocs_page_url = "/dtx_to_wif/installing/";
       </script>
     
     <!--[if lt IE 9]>
@@ -31,11 +34,7 @@
     <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
           <a href=".." class="icon icon-home"> dtx_to_wif
-        </a><div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
-  </form>
-</div>
+        </a>
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
@@ -50,8 +49,33 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../version_history/">Version Histsory</a>
+                <li class="toctree-l1"><a class="reference internal" href="../version_history/">Version History</a>
                 </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API REFERENCE</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" >dtx_to_wif</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../api/dtx_to_wif/">dtx_to_wif</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../api/dtx_to_wif/dtx_reader/">dtx_to_wif.dtx_reader</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../api/dtx_to_wif/pattern_data/">dtx_to_wif.pattern_data</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../api/dtx_to_wif/pattern_reader/">dtx_to_wif.pattern_reader</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../api/dtx_to_wif/run_x_to_wif/">dtx_to_wif.run_x_to_wif</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../api/dtx_to_wif/version/">dtx_to_wif.version</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../api/dtx_to_wif/wif_reader/">dtx_to_wif.wif_reader</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../api/dtx_to_wif/wif_writer/">dtx_to_wif.wif_writer</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../api/dtx_to_wif/wpo_reader/">dtx_to_wif.wpo_reader</a>
+                </li>
+    </ul>
+                  </li>
               </ul>
       </div>
     </div>
@@ -80,13 +104,15 @@
 <ol>
 <li>
 <p>Check if you have Python installed.</p>
-<p>Run your terminal application (called Terminal on macOS and cmd.exe on Windows).</p>
+<p>Run your <a href="/dtx_to_wif/#terminal-applications">terminal application</a>.</p>
 <p>At the prompt type:</p>
 <pre><code>python --version
 </code></pre>
 <p>If Python is installed, this will print a version number.
 If that version number is at least 3.7, you may skip the next step
 (though you might wish to upgrade your Python if it's very old).</p>
+<p>(People who wish to contribute to this package should install Python 3.10 or later,
+because mkdocs requires that to build documentation).</p>
 </li>
 <li>
 <p>If necessary, install <a href="https://www.python.org/downloads/">Python</a> 3.7 or later.</p>
@@ -129,7 +155,7 @@ Describing how is out of scope for this document, but instructions are widely av
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
         <a href=".." class="btn btn-neutral float-left" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../version_history/" class="btn btn-neutral float-right" title="Version Histsory">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../version_history/" class="btn btn-neutral float-right" title="Version History">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -163,7 +189,7 @@ Describing how is out of scope for this document, but instructions are widely av
     <script>var base_url = "..";</script>
     <script src="../js/theme_extra.js"></script>
     <script src="../js/theme.js"></script>
-      <script src="../search/main.js"></script>
+      <script src="../javascript/mkapi.js"></script>
     <script>
         jQuery(function () {
             SphinxRtdTheme.Navigation.enable(true);

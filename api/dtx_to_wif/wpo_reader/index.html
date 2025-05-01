@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://r-owen.github.io/dtx_to_wif/api/dtx_to_wif/wpo_reader/" />
+      <link rel="shortcut icon" href="../../../img/favicon.ico" />
+    <title>dtx_to_wif.wpo_reader - dtx_to_wif</title>
+    <link rel="stylesheet" href="../../../css/theme.css" />
+    <link rel="stylesheet" href="../../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../../css/mkapi-common.css" rel="stylesheet" />
+        <link href="../../../css/mkapi-material.css" rel="stylesheet" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "dtx_to_wif.wpo_reader";
+        var mkdocs_page_input_path = "api/dtx_to_wif/wpo_reader.md";
+        var mkdocs_page_url = "/dtx_to_wif/api/dtx_to_wif/wpo_reader/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../../.." class="icon icon-home"> dtx_to_wif
+        </a>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../../installing/">Installing</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../../version_history/">Version History</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API REFERENCE</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" >dtx_to_wif</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../">dtx_to_wif</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../dtx_reader/">dtx_to_wif.dtx_reader</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../pattern_data/">dtx_to_wif.pattern_data</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../pattern_reader/">dtx_to_wif.pattern_reader</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../run_x_to_wif/">dtx_to_wif.run_x_to_wif</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../version/">dtx_to_wif.version</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../wif_reader/">dtx_to_wif.wif_reader</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../wif_writer/">dtx_to_wif.wif_writer</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="#">dtx_to_wif.wpo_reader</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#dtx_to_wif.wpo_reader.read_wpo">read_wpo</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#dtx_to_wif.wpo_reader.FileTypes">FileTypes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#dtx_to_wif.wpo_reader.mask_to_int_set">mask_to_int_set</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#dtx_to_wif.wpo_reader.num_bytes_for_bits">num_bytes_for_bits</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#dtx_to_wif.wpo_reader.read_bitmask_sequence">read_bitmask_sequence</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#dtx_to_wif.wpo_reader.read_bytes">read_bytes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#dtx_to_wif.wpo_reader.read_dict_of_int">read_dict_of_int</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#dtx_to_wif.wpo_reader.read_int">read_int</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#dtx_to_wif.wpo_reader.read_rgb">read_rgb</a>
+    </li>
+    </ul>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../..">dtx_to_wif</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">API REFERENCE</li>
+          <li class="breadcrumb-item">dtx_to_wif</li>
+      <li class="breadcrumb-item active">dtx_to_wif.wpo_reader</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 style="display: none;">dtx_to_wif.wpo_reader</h1><p class="mkapi-object mkapi-page-source" id="dtx_to_wif.wpo_reader">
+<span class="mkapi-object-link">
+
+
+<a href="../../../src/dtx_to_wif/wpo_reader/#dtx_to_wif.wpo_reader" title="Go to source">source</a>
+<span class="mkapi-document-toggle" title="Toggle all docs">
+<i class="fa-regular fa-square-minus"></i>
+</span>
+</span><span class="mkapi-object-kind">module</span>
+<span class="mkapi-object-name"><a href="./#dtx_to_wif.wpo_reader" title="dtx_to_wif.wpo_reader">dtx_to_wif.wpo_reader</a></span>
+</p>
+<div class="mkapi-document">
+<p class="mkapi-section">
+<span class="mkapi-object-link">
+<span class="mkapi-section-toggle" title="Toggle classes">
+<i class="fa-regular fa-square-minus"></i>
+</span>
+</span>
+<span class="mkapi-section-name">Classes</span>
+</p>
+<div class="mkapi-section-content">
+<ul class="mkapi-item-list">
+<li>
+<p><span class="mkapi-item-name"><a href="./#dtx_to_wif.wpo_reader.FileTypes" title="dtx_to_wif.wpo_reader.FileTypes">FileTypes</a></span>
+ <span class="mkapi-dash">&mdash;</span>
+File types are:</p>
+</li>
+</ul>
+</div>
+<p class="mkapi-section">
+<span class="mkapi-object-link">
+<span class="mkapi-section-toggle" title="Toggle functions">
+<i class="fa-regular fa-square-minus"></i>
+</span>
+</span>
+<span class="mkapi-section-name">Functions</span>
+</p>
+<div class="mkapi-section-content">
+<ul class="mkapi-item-list">
+<li>
+<p><span class="mkapi-item-name"><a href="./#dtx_to_wif.wpo_reader.read_wpo" title="dtx_to_wif.wpo_reader.read_wpo">read_wpo</a></span>
+ <span class="mkapi-dash">&mdash;</span>
+Read a WeavePoint wpo weaving file as PatternData</p>
+</li>
+<li>
+<p><span class="mkapi-item-name"><a href="./#dtx_to_wif.wpo_reader.mask_to_int_set" title="dtx_to_wif.wpo_reader.mask_to_int_set">mask_to_int_set</a></span>
+ <span class="mkapi-dash">&mdash;</span>
+Convert a bit mask to a set of 1-valued ints</p>
+</li>
+<li>
+<p><span class="mkapi-item-name"><a href="./#dtx_to_wif.wpo_reader.num_bytes_for_bits" title="dtx_to_wif.wpo_reader.num_bytes_for_bits">num_bytes_for_bits</a></span>
+ <span class="mkapi-dash">&mdash;</span>
+Return the number of bytes required to hold num_bits bits</p>
+</li>
+<li>
+<p><span class="mkapi-item-name"><a href="./#dtx_to_wif.wpo_reader.read_bitmask_sequence" title="dtx_to_wif.wpo_reader.read_bitmask_sequence">read_bitmask_sequence</a></span>
+ <span class="mkapi-dash">&mdash;</span>
+Read a sequence of bitmasks, e.g. tieup, liftplan, or multiple treadles.</p>
+</li>
+<li>
+<p><span class="mkapi-item-name"><a href="./#dtx_to_wif.wpo_reader.read_bytes" title="dtx_to_wif.wpo_reader.read_bytes">read_bytes</a></span>
+ <span class="mkapi-dash">&mdash;</span>
+Read exactly num_bytes bytes (possibly using multiple reads).</p>
+</li>
+<li>
+<p><span class="mkapi-item-name"><a href="./#dtx_to_wif.wpo_reader.read_dict_of_int" title="dtx_to_wif.wpo_reader.read_dict_of_int">read_dict_of_int</a></span>
+ <span class="mkapi-dash">&mdash;</span>
+Read a sequence of one-byte integers as a dict of int</p>
+</li>
+<li>
+<p><span class="mkapi-item-name"><a href="./#dtx_to_wif.wpo_reader.read_int" title="dtx_to_wif.wpo_reader.read_int">read_int</a></span>
+ <span class="mkapi-dash">&mdash;</span>
+Read num_bytes bytes as a big-endian int</p>
+</li>
+<li>
+<p><span class="mkapi-item-name"><a href="./#dtx_to_wif.wpo_reader.read_rgb" title="dtx_to_wif.wpo_reader.read_rgb">read_rgb</a></span>
+ <span class="mkapi-dash">&mdash;</span>
+Read one set of RGB values encoded as 3 bytes.</p>
+</li>
+</ul>
+</div>
+</div>
+<p class="mkapi-object mkapi-page-source" id="dtx_to_wif.wpo_reader.read_wpo">
+<span class="mkapi-object-link">
+
+
+<a href="../../../src/dtx_to_wif/wpo_reader/#dtx_to_wif.wpo_reader.read_wpo" title="Go to source">source</a>
+<span class="mkapi-document-toggle" title="Toggle all docs">
+<i class="fa-regular fa-square-minus"></i>
+</span>
+</span>
+<span class="mkapi-object-name"><a href="./#dtx_to_wif.wpo_reader.read_wpo" title="dtx_to_wif.wpo_reader.read_wpo">read_wpo</a></span><span class="mkapi-signature"><span class="mkapi-paren">(</span><span class="mkapi-arg">f</span><span class="mkapi-colon">: </span><span class="mkapi-ann"><span class="mkapi-tooltip" title="typing.BinaryIO">BinaryIO</span></span><span class="mkapi-comma">, </span><span class="mkapi-arg">filename</span><span class="mkapi-colon">: </span><span class="mkapi-ann">str</span><span class="mkapi-paren">)</span><span class="mkapi-arrow"> → </span><span class="mkapi-return"><a href="../pattern_data/#dtx_to_wif.pattern_data.PatternData" title="dtx_to_wif.pattern_data.PatternData">PatternData</a></span></span>
+</p>
+<div class="mkapi-document">
+<p>Read a WeavePoint wpo weaving file as PatternData</p>
+<p>Does not read per-thread thickness and separation are not read,
+because the company has not told me how to access that information.</p>
+<p class="mkapi-section">
+<span class="mkapi-object-link">
+<span class="mkapi-section-toggle" title="Toggle parameters">
+<i class="fa-regular fa-square-minus"></i>
+</span>
+</span>
+<span class="mkapi-section-name">Parameters</span>
+</p>
+<div class="mkapi-section-content">
+<ul class="mkapi-item-list">
+<li>
+<p><span class="mkapi-item-name">f</span> : 
+<span class="mkapi-item-type"><span class="mkapi-tooltip" title="typing.BinaryIO">BinaryIO</span></span> <span class="mkapi-dash">&mdash;</span>
+A readable binary file.</p>
+</li>
+<li>
+<p><span class="mkapi-item-name">filename</span> : 
+<span class="mkapi-item-type">str</span> <span class="mkapi-dash">&mdash;</span>
+The file name. Used as the pattern name.</p>
+</li>
+</ul>
+</div>
+<p class="mkapi-section">
+<span class="mkapi-object-link">
+<span class="mkapi-section-toggle" title="Toggle raises">
+<i class="fa-regular fa-square-minus"></i>
+</span>
+</span>
+<span class="mkapi-section-name">Raises</span>
+</p>
+<div class="mkapi-section-content">
+<ul class="mkapi-item-list">
+<li>
+<p><span class="mkapi-item-type">RuntimeError</span></p>
+</li>
+</ul>
+</div>
+</div>
+<p class="mkapi-object mkapi-page-source" id="dtx_to_wif.wpo_reader.FileTypes">
+<span class="mkapi-object-link">
+
+
+<a href="../../../src/dtx_to_wif/wpo_reader/#dtx_to_wif.wpo_reader.FileTypes" title="Go to source">source</a>
+<span class="mkapi-document-toggle" title="Toggle all docs">
+<i class="fa-regular fa-square-minus"></i>
+</span>
+</span><span class="mkapi-object-kind">enum</span>
+<span class="mkapi-object-name"><a href="./#dtx_to_wif.wpo_reader.FileTypes" title="dtx_to_wif.wpo_reader.FileTypes">FileTypes</a></span><span class="mkapi-signature"><span class="mkapi-paren">(</span><span class="mkapi-star">*</span><span class="mkapi-arg">args</span><span class="mkapi-comma">, </span><span class="mkapi-star">**</span><span class="mkapi-arg">kwds</span><span class="mkapi-paren">)</span></span>
+</p>
+<div class="mkapi-document">
+<p><p class="mkapi-bases" markdown="1">Bases :
+<span class="mkapi-base"><span class="mkapi-tooltip" title="dtx_to_wif.wpo_reader.enum">enum</span>.<span class="mkapi-tooltip" title="dtx_to_wif.wpo_reader.enum.IntEnum">IntEnum</span></span></p></p>
+<p>File types are:</p>
+<p class="mkapi-section">
+<span class="mkapi-object-link">
+<span class="mkapi-section-toggle" title="Toggle liftplan">
+<i class="fa-regular fa-square-minus"></i>
+</span>
+</span>
+<span class="mkapi-section-name">LIFTPLAN</span>
+</p>
+<div class="mkapi-section-content">
+<pre><code>Liftplan is present;
+tie-up, single treadling, and multiple treadling are not.
+</code></pre>
+<p>SINGLE_TREADLING:
+    Tie-up and single treadling are present;
+    liftplan and multiple treadling are not.
+MULTIPLE_TREADLING:
+    Tie-up and multiple treadling are present;
+    liftplan and single treadling are not.</p>
+</div>
+<p class="mkapi-section">
+<span class="mkapi-object-link">
+<span class="mkapi-section-toggle" title="Toggle attributes">
+<i class="fa-regular fa-square-minus"></i>
+</span>
+</span>
+<span class="mkapi-section-name">Attributes</span>
+</p>
+<div class="mkapi-section-content">
+<ul class="mkapi-item-list">
+<li>
+<p><span class="mkapi-item-name">LIFTPLAN</span></p>
+</li>
+<li>
+<p><span class="mkapi-item-name">SINGLE_TREADLING</span></p>
+</li>
+<li>
+<p><span class="mkapi-item-name">MULTIPLE_TREADLING</span></p>
+</li>
+</ul>
+</div>
+</div>
+<p class="mkapi-object mkapi-page-source" id="dtx_to_wif.wpo_reader.mask_to_int_set">
+<span class="mkapi-object-link">
+
+
+<a href="../../../src/dtx_to_wif/wpo_reader/#dtx_to_wif.wpo_reader.mask_to_int_set" title="Go to source">source</a>
+<span class="mkapi-document-toggle" title="Toggle all docs">
+<i class="fa-regular fa-square-minus"></i>
+</span>
+</span>
+<span class="mkapi-object-name"><a href="./#dtx_to_wif.wpo_reader.mask_to_int_set" title="dtx_to_wif.wpo_reader.mask_to_int_set">mask_to_int_set</a></span><span class="mkapi-signature"><span class="mkapi-paren">(</span><span class="mkapi-arg">mask</span><span class="mkapi-colon">: </span><span class="mkapi-ann">int</span><span class="mkapi-paren">)</span><span class="mkapi-arrow"> → </span><span class="mkapi-return">set[int]</span></span>
+</p>
+<div class="mkapi-document">
+<p>Convert a bit mask to a set of 1-valued ints</p>
+</div>
+<p class="mkapi-object mkapi-page-source" id="dtx_to_wif.wpo_reader.num_bytes_for_bits">
+<span class="mkapi-object-link">
+
+
+<a href="../../../src/dtx_to_wif/wpo_reader/#dtx_to_wif.wpo_reader.num_bytes_for_bits" title="Go to source">source</a>
+<span class="mkapi-document-toggle" title="Toggle all docs">
+<i class="fa-regular fa-square-minus"></i>
+</span>
+</span>
+<span class="mkapi-object-name"><a href="./#dtx_to_wif.wpo_reader.num_bytes_for_bits" title="dtx_to_wif.wpo_reader.num_bytes_for_bits">num_bytes_for_bits</a></span><span class="mkapi-signature"><span class="mkapi-paren">(</span><span class="mkapi-arg">num_bits</span><span class="mkapi-colon">: </span><span class="mkapi-ann">int</span><span class="mkapi-paren">)</span><span class="mkapi-arrow"> → </span><span class="mkapi-return">int</span></span>
+</p>
+<div class="mkapi-document">
+<p>Return the number of bytes required to hold num_bits bits</p>
+<p class="mkapi-section">
+<span class="mkapi-object-link">
+<span class="mkapi-section-toggle" title="Toggle raises">
+<i class="fa-regular fa-square-minus"></i>
+</span>
+</span>
+<span class="mkapi-section-name">Raises</span>
+</p>
+<div class="mkapi-section-content">
+<ul class="mkapi-item-list">
+<li>
+<p><span class="mkapi-item-type">ValueError</span></p>
+</li>
+</ul>
+</div>
+</div>
+<p class="mkapi-object mkapi-page-source" id="dtx_to_wif.wpo_reader.read_bitmask_sequence">
+<span class="mkapi-object-link">
+
+
+<a href="../../../src/dtx_to_wif/wpo_reader/#dtx_to_wif.wpo_reader.read_bitmask_sequence" title="Go to source">source</a>
+<span class="mkapi-document-toggle" title="Toggle all docs">
+<i class="fa-regular fa-square-minus"></i>
+</span>
+</span>
+<span class="mkapi-object-name"><a href="./#dtx_to_wif.wpo_reader.read_bitmask_sequence" title="dtx_to_wif.wpo_reader.read_bitmask_sequence">read_bitmask_sequence</a></span><span class="mkapi-signature"><span class="mkapi-paren">(</span><span class="mkapi-arg">f</span><span class="mkapi-colon">: </span><span class="mkapi-ann"><span class="mkapi-tooltip" title="typing.BinaryIO">BinaryIO</span></span><span class="mkapi-comma">, </span><span class="mkapi-arg">bits_per_mask</span><span class="mkapi-colon">: </span><span class="mkapi-ann">int</span><span class="mkapi-comma">, </span><span class="mkapi-arg">num_masks</span><span class="mkapi-colon">: </span><span class="mkapi-ann">int | None</span><span class="mkapi-equal"> = </span><span class="mkapi-default">None</span><span class="mkapi-paren">)</span><span class="mkapi-arrow"> → </span><span class="mkapi-return">dict[int, set[int]]</span></span>
+</p>
+<div class="mkapi-document">
+<p>Read a sequence of bitmasks, e.g. tieup, liftplan, or multiple treadles.</p>
+<p>The data format is:</p>
+<ul>
+<li>number of masks, encoded as two big-endian bytes: MSB, LSB,
+  unless num_masks is not None, in which case that data section should
+  not have 2 bytes of length. Tieup data is one section that does not have
+  2 length bytes, since the length is the number of treadles.</li>
+<li>sequence of bitmasks, where each bitmask has just enough bytes to hold
+  "bits_per_mask" bits. Bytes are in little-endian order (LSB, ..., MSB).
+  Shaft/treadle 1 is bit 1, shaft/treadle 2 is bit 2, etc.</li>
+</ul>
+<p>The result is a dict of 1-based index: set of 1-based ints representing
+high bits in the bitmask.</p>
+<p>May return bits &gt; bits_per_mask, since it does not check for that.</p>
+<p class="mkapi-section">
+<span class="mkapi-object-link">
+<span class="mkapi-section-toggle" title="Toggle raises">
+<i class="fa-regular fa-square-minus"></i>
+</span>
+</span>
+<span class="mkapi-section-name">Raises</span>
+</p>
+<div class="mkapi-section-content">
+<ul class="mkapi-item-list">
+<li>
+<p><span class="mkapi-item-type">RuntimeError</span></p>
+</li>
+</ul>
+</div>
+</div>
+<p class="mkapi-object mkapi-page-source" id="dtx_to_wif.wpo_reader.read_bytes">
+<span class="mkapi-object-link">
+
+
+<a href="../../../src/dtx_to_wif/wpo_reader/#dtx_to_wif.wpo_reader.read_bytes" title="Go to source">source</a>
+<span class="mkapi-document-toggle" title="Toggle all docs">
+<i class="fa-regular fa-square-minus"></i>
+</span>
+</span>
+<span class="mkapi-object-name"><a href="./#dtx_to_wif.wpo_reader.read_bytes" title="dtx_to_wif.wpo_reader.read_bytes">read_bytes</a></span><span class="mkapi-signature"><span class="mkapi-paren">(</span><span class="mkapi-arg">f</span><span class="mkapi-colon">: </span><span class="mkapi-ann"><span class="mkapi-tooltip" title="typing.BinaryIO">BinaryIO</span></span><span class="mkapi-comma">, </span><span class="mkapi-arg">num_bytes</span><span class="mkapi-colon">: </span><span class="mkapi-ann">int</span><span class="mkapi-paren">)</span><span class="mkapi-arrow"> → </span><span class="mkapi-return">bytes</span></span>
+</p>
+<div class="mkapi-document">
+<p>Read exactly num_bytes bytes (possibly using multiple reads).</p>
+<p class="mkapi-section">
+<span class="mkapi-object-link">
+<span class="mkapi-section-toggle" title="Toggle raises">
+<i class="fa-regular fa-square-minus"></i>
+</span>
+</span>
+<span class="mkapi-section-name">Raises</span>
+</p>
+<div class="mkapi-section-content">
+<ul class="mkapi-item-list">
+<li>
+<p><span class="mkapi-item-name">EOFError</span>
+ <span class="mkapi-dash">&mdash;</span>
+If EOF seen, and ValueError if num_bytes &lt; 1.</p>
+</li>
+<li>
+<p><span class="mkapi-item-type">ValueError</span></p>
+</li>
+<li>
+<p><span class="mkapi-item-type">RuntimeError</span></p>
+</li>
+</ul>
+</div>
+</div>
+<p class="mkapi-object mkapi-page-source" id="dtx_to_wif.wpo_reader.read_dict_of_int">
+<span class="mkapi-object-link">
+
+
+<a href="../../../src/dtx_to_wif/wpo_reader/#dtx_to_wif.wpo_reader.read_dict_of_int" title="Go to source">source</a>
+<span class="mkapi-document-toggle" title="Toggle all docs">
+<i class="fa-regular fa-square-minus"></i>
+</span>
+</span>
+<span class="mkapi-object-name"><a href="./#dtx_to_wif.wpo_reader.read_dict_of_int" title="dtx_to_wif.wpo_reader.read_dict_of_int">read_dict_of_int</a></span><span class="mkapi-signature"><span class="mkapi-paren">(</span><span class="mkapi-arg">f</span><span class="mkapi-colon">: </span><span class="mkapi-ann"><span class="mkapi-tooltip" title="typing.BinaryIO">BinaryIO</span></span><span class="mkapi-paren">)</span><span class="mkapi-arrow"> → </span><span class="mkapi-return">dict[int, int]</span></span>
+</p>
+<div class="mkapi-document">
+<p>Read a sequence of one-byte integers as a dict of int</p>
+<p>The input format is:</p>
+<ul>
+<li>length as 2 bytes: MSB, LSB</li>
+<li>integer1, integer2, ... (length vaues)</li>
+</ul>
+<p>Return as a dict of {1-based index: integer value}</p>
+</div>
+<p class="mkapi-object mkapi-page-source" id="dtx_to_wif.wpo_reader.read_int">
+<span class="mkapi-object-link">
+
+
+<a href="../../../src/dtx_to_wif/wpo_reader/#dtx_to_wif.wpo_reader.read_int" title="Go to source">source</a>
+<span class="mkapi-document-toggle" title="Toggle all docs">
+<i class="fa-regular fa-square-minus"></i>
+</span>
+</span>
+<span class="mkapi-object-name"><a href="./#dtx_to_wif.wpo_reader.read_int" title="dtx_to_wif.wpo_reader.read_int">read_int</a></span><span class="mkapi-signature"><span class="mkapi-paren">(</span><span class="mkapi-arg">f</span><span class="mkapi-colon">: </span><span class="mkapi-ann"><span class="mkapi-tooltip" title="typing.BinaryIO">BinaryIO</span></span><span class="mkapi-comma">, </span><span class="mkapi-arg">num_bytes</span><span class="mkapi-colon">: </span><span class="mkapi-ann">int</span><span class="mkapi-comma">, </span><span class="mkapi-arg">big_endian</span><span class="mkapi-equal">=</span><span class="mkapi-default">True</span><span class="mkapi-paren">)</span><span class="mkapi-arrow"> → </span><span class="mkapi-return">int</span></span>
+</p>
+<div class="mkapi-document">
+<p>Read num_bytes bytes as a big-endian int</p>
+</div>
+<p class="mkapi-object mkapi-page-source" id="dtx_to_wif.wpo_reader.read_rgb">
+<span class="mkapi-object-link">
+
+
+<a href="../../../src/dtx_to_wif/wpo_reader/#dtx_to_wif.wpo_reader.read_rgb" title="Go to source">source</a>
+<span class="mkapi-document-toggle" title="Toggle all docs">
+<i class="fa-regular fa-square-minus"></i>
+</span>
+</span>
+<span class="mkapi-object-name"><a href="./#dtx_to_wif.wpo_reader.read_rgb" title="dtx_to_wif.wpo_reader.read_rgb">read_rgb</a></span><span class="mkapi-signature"><span class="mkapi-paren">(</span><span class="mkapi-arg">f</span><span class="mkapi-colon">: </span><span class="mkapi-ann"><span class="mkapi-tooltip" title="typing.BinaryIO">BinaryIO</span></span><span class="mkapi-paren">)</span><span class="mkapi-arrow"> → </span><span class="mkapi-return">tuple[int, int, int]</span></span>
+</p>
+<div class="mkapi-document">
+<p>Read one set of RGB values encoded as 3 bytes.</p>
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../wif_writer/" class="btn btn-neutral float-left" title="dtx_to_wif.wif_writer"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../wif_writer/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+  </span>
+</div>
+    <script src="../../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../../..";</script>
+    <script src="../../../js/theme_extra.js"></script>
+    <script src="../../../js/theme.js"></script>
+      <script src="../../../javascript/mkapi.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

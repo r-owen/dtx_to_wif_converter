@@ -3,18 +3,21 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="None" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="None" /><link rel="canonical" href="https://r-owen.github.io/dtx_to_wif/" />
       <link rel="shortcut icon" href="img/favicon.ico" />
     <title>dtx_to_wif</title>
     <link rel="stylesheet" href="css/theme.css" />
     <link rel="stylesheet" href="css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="css/mkapi-common.css" rel="stylesheet" />
+        <link href="css/mkapi-material.css" rel="stylesheet" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet" />
     
       <script>
         // Current page data
         var mkdocs_page_name = "Home";
         var mkdocs_page_input_path = "index.md";
-        var mkdocs_page_url = null;
+        var mkdocs_page_url = "/dtx_to_wif/";
       </script>
     
     <!--[if lt IE 9]>
@@ -31,11 +34,7 @@
     <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
           <a href="." class="icon icon-home"> dtx_to_wif
-        </a><div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
-      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
-  </form>
-</div>
+        </a>
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
@@ -47,6 +46,8 @@
     <li class="toctree-l2"><a class="reference internal" href="#reading-files-into-memory">Reading Files Into Memory</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#terminal-applications">Terminal Applications</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#links">Links</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#limitations">Limitations</a>
     </li>
@@ -60,8 +61,33 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="version_history/">Version Histsory</a>
+                <li class="toctree-l1"><a class="reference internal" href="version_history/">Version History</a>
                 </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API REFERENCE</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" >dtx_to_wif</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="api/dtx_to_wif/">dtx_to_wif</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="api/dtx_to_wif/dtx_reader/">dtx_to_wif.dtx_reader</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="api/dtx_to_wif/pattern_data/">dtx_to_wif.pattern_data</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="api/dtx_to_wif/pattern_reader/">dtx_to_wif.pattern_reader</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="api/dtx_to_wif/run_x_to_wif/">dtx_to_wif.run_x_to_wif</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="api/dtx_to_wif/version/">dtx_to_wif.version</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="api/dtx_to_wif/wif_reader/">dtx_to_wif.wif_reader</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="api/dtx_to_wif/wif_writer/">dtx_to_wif.wif_writer</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="api/dtx_to_wif/wpo_reader/">dtx_to_wif.wpo_reader</a>
+                </li>
+    </ul>
+                  </li>
               </ul>
       </div>
     </div>
@@ -90,7 +116,7 @@
 <p>Convert FiberWorks .dtx and WeavePoint .wpo weaving pattern files to WIF 1.1.
 You do not need a copy of FiberWorks or WeavePoint to use this software.</p>
 <p>Conversion is done using a <a href="#terminal-applications">terminal</a>. If you are not comfortable using a terminal, this may not be the right package for you.</p>
-<p>This package can also read .wif, .dtx, and .wpo files into an in-memory class, which is the same for all supported file formats.</p>
+<p>This package can also be used by weaving-related software to <a href="#reading-files-into-memory">read supported weaving pattern files</a>.</p>
 <h2 id="converting-files">Converting Files</h2>
 <p>First <a href="installing/">install</a> the software.
 Pay careful attention to where the <code>dtx_to_wif</code> and <code>wpo_to_wif</code> executables are installed.
@@ -99,9 +125,9 @@ The path will be long on Windows.</p>
 <p>Type the following on macOS or unix:</p>
 <pre><code>dtx_to_wif path1 path2 ...
 </code></pre>
-<p>If this fails, specify the path to <code>dtx_to_wif</code> (as shown when you installed the package), or add its directory to the PATH.</p>
+<p>If dtx_to_wif is not found, specify the path to it, as described in <a href="installing/">installing</a>.</p>
 <p>On Windows type:</p>
-<pre><code>&lt;...path to dtx_to_wif...&gt;dtx_to_wif.exe path1 path2 ...
+<pre><code>&lt;...path to dtx_to_wif...&gt;\dtx_to_wif.exe path1 path2 ...
 </code></pre>
 <p>where <code>&lt;...path to dtx_to_wif...&gt;</code> is the path to the file, as shown when you installed <code>dtx_to_wif</code>.</p>
 <p>The path arguments can files or directories.
@@ -112,14 +138,20 @@ If a WIF file with that path already exists, the old file is left unchanged, wit
 To overwrite existing files, run the command with option <code>--overwrite</code>.</p>
 <p>If you run the command with option <code>-h</code> you will see all available options.</p>
 <h2 id="reading-files-into-memory">Reading Files Into Memory</h2>
-<p>This package can also read weaving pattern files into an in-memory representation, class <code>dtx_to_wif.PatternData</code>.
-This could be used by dobby loom control software, pattern visualization software, or weaving design software.</p>
-<p>To read a weaving pattern file that is in any supported format, call <code>dtx_to_wif.read_pattern_file(filepath)</code>.</p>
-<p>To read a weaving pattern file from a string, call <code>dtx_to_wif.read_pattern_data(data: str, suffix: str, name: str)</code>.
-Encode WeavePoint files, which are binary, as base64. The suffix must include a leading period, e.g. ".dtx".</p>
-<p>To write <code>dtx_to_wif.PatternData</code> to a WIF file, call <code>write_wif</code>.</p>
+<p>dtx_to_wif can read .dtx, .wif, and .wpo pattern files into an instance of <a href="/dtx_to_wif/api/dtx_to_wif/pattern_data/#dtx_to_wif.pattern_data.PatternData">dtx_to_wif.PatternData</a>.
+This is used by <a href="https://pypi.org/project/base-loom-server/">base_loom_server</a> dobby loom control software.
+It could also be used by pattern visualization software and weaving design software.</p>
+<p>To read a weaving pattern from a file, call <a href="/dtx_to_wif/api/dtx_to_wif/pattern_reader/#dtx_to_wif.pattern_reader.read_pattern_file">dtx_to_wif.read_pattern_file</a>. To read a weaving pattern from a string, call <a href="/dtx_to_wif/api/dtx_to_wif/pattern_reader/#dtx_to_wif.pattern_reader.read_pattern_data">dtx_to_wif.read_pattern_data</a>.</p>
+<p>To write <a href="/dtx_to_wif/api/dtx_to_wif/pattern_data/#dtx_to_wif.pattern_data.PatternData">dtx_to_wif.PatternData</a> to a WIF file, call <a href="/dtx_to_wif/api/dtx_to_wif/wif_writer/#dtx_to_wif.wif_writer.write_wif">dtx_to_wif.write_wif</a>.</p>
 <h2 id="terminal-applications">Terminal Applications</h2>
-<p>The standard terminal applications are "Terminal" for macOS, and "cmd.exe" for Windows. Other terminal applications are available, but the standard ones are fine.</p>
+<p>The standard terminal applications are <code>Terminal</code> for macOS, and <code>cmd.exe</code> for Windows. Other terminal applications are available, but the standard ones are fine.</p>
+<h2 id="links">Links</h2>
+<ul>
+<li><a href="https://pypi.org/project/dtx-to-wif/">PyPi</a></li>
+<li><a href="https://r-owen.github.io/dtx_to_wif/">Documentation</a></li>
+<li><a href="https://github.com/r-owen/dtx_to_wif">Source Code</a></li>
+<li><a href="https://github.com/r-owen/dtx_to_wif/issues">Issue Tracker</a></li>
+</ul>
 <h2 id="limitations">Limitations</h2>
 <p>Known differences from the WIF files that FiberWorks writes:</p>
 <ul>
@@ -133,7 +165,7 @@ Encode WeavePoint files, which are binary, as base64. The suffix must include a 
 Due to this limitation I consider <code>wpo_to_wif</code> only marginally useful.
 The main use case for reading WeavePoint files is to support dobby loom control software.</p>
 <h2 id="license">License</h2>
-<p>This software is licensed under the MIT license; see license.txt for details.</p>
+<p>This software is licensed under the MIT license. See <a href="https://github.com/r-owen/dtx_to_wif/blob/main/license.txt">license.txt</a> for details.</p>
               
             </div>
           </div><footer>
@@ -170,7 +202,7 @@ The main use case for reading WeavePoint files is to support dobby loom control 
     <script>var base_url = ".";</script>
     <script src="js/theme_extra.js"></script>
     <script src="js/theme.js"></script>
-      <script src="search/main.js"></script>
+      <script src="javascript/mkapi.js"></script>
     <script>
         jQuery(function () {
             SphinxRtdTheme.Navigation.enable(true);
@@ -182,5 +214,5 @@ The main use case for reading WeavePoint files is to support dobby loom control 
 
 <!--
 MkDocs version : 1.6.1
-Build Date UTC : 2025-04-28 21:53:09.610586+00:00
+Build Date UTC : 2025-05-01 18:28:06.271862+00:00
 -->

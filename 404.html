@@ -4,14 +4,17 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <link rel="shortcut icon" href="/img/favicon.ico" />
+      <link rel="shortcut icon" href="/dtx_to_wif/img/favicon.ico" />
     <title>dtx_to_wif</title>
-    <link rel="stylesheet" href="/css/theme.css" />
-    <link rel="stylesheet" href="/css/theme_extra.css" />
+    <link rel="stylesheet" href="/dtx_to_wif/css/theme.css" />
+    <link rel="stylesheet" href="/dtx_to_wif/css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="/dtx_to_wif/css/mkapi-common.css" rel="stylesheet" />
+        <link href="/dtx_to_wif/css/mkapi-material.css" rel="stylesheet" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet" />
     
     <!--[if lt IE 9]>
-      <script src="/js/html5shiv.min.js"></script>
+      <script src="/dtx_to_wif/js/html5shiv.min.js"></script>
     <![endif]-->
       <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
       <script>hljs.highlightAll();</script> 
@@ -23,26 +26,47 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
     <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
-          <a href="/." class="icon icon-home"> dtx_to_wif
-        </a><div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="//search.html" method="get">
-      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
-  </form>
-</div>
+          <a href="/dtx_to_wif/." class="icon icon-home"> dtx_to_wif
+        </a>
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="/.">Home</a>
+                <li class="toctree-l1"><a class="reference internal" href="/dtx_to_wif/.">Home</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="/installing/">Installing</a>
+                <li class="toctree-l1"><a class="reference internal" href="/dtx_to_wif/installing/">Installing</a>
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="/version_history/">Version Histsory</a>
+                <li class="toctree-l1"><a class="reference internal" href="/dtx_to_wif/version_history/">Version History</a>
                 </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API REFERENCE</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" >dtx_to_wif</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="/dtx_to_wif/api/dtx_to_wif/">dtx_to_wif</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="/dtx_to_wif/api/dtx_to_wif/dtx_reader/">dtx_to_wif.dtx_reader</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="/dtx_to_wif/api/dtx_to_wif/pattern_data/">dtx_to_wif.pattern_data</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="/dtx_to_wif/api/dtx_to_wif/pattern_reader/">dtx_to_wif.pattern_reader</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="/dtx_to_wif/api/dtx_to_wif/run_x_to_wif/">dtx_to_wif.run_x_to_wif</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="/dtx_to_wif/api/dtx_to_wif/version/">dtx_to_wif.version</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="/dtx_to_wif/api/dtx_to_wif/wif_reader/">dtx_to_wif.wif_reader</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="/dtx_to_wif/api/dtx_to_wif/wif_writer/">dtx_to_wif.wif_writer</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="/dtx_to_wif/api/dtx_to_wif/wpo_reader/">dtx_to_wif.wpo_reader</a>
+                </li>
+    </ul>
+                  </li>
               </ul>
       </div>
     </div>
@@ -51,13 +75,13 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
       <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="/.">dtx_to_wif</a>
+          <a href="/dtx_to_wif/.">dtx_to_wif</a>
         
       </nav>
       <div class="wy-nav-content">
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href="/." class="icon icon-home" aria-label="Docs"></a></li>
+    <li><a href="/dtx_to_wif/." class="icon icon-home" aria-label="Docs"></a></li>
     <li class="wy-breadcrumbs-aside">
     </li>
   </ul>
@@ -98,11 +122,11 @@
     
   </span>
 </div>
-    <script src="/js/jquery-3.6.0.min.js"></script>
-    <script>var base_url = "/";</script>
-    <script src="/js/theme_extra.js"></script>
-    <script src="/js/theme.js"></script>
-      <script src="/search/main.js"></script>
+    <script src="/dtx_to_wif/js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "/dtx_to_wif/";</script>
+    <script src="/dtx_to_wif/js/theme_extra.js"></script>
+    <script src="/dtx_to_wif/js/theme.js"></script>
+      <script src="/dtx_to_wif/javascript/mkapi.js"></script>
     <script>
         jQuery(function () {
             SphinxRtdTheme.Navigation.enable(true);
