@@ -1,5 +1,11 @@
 # Version History
 
+## 4.3 2025-05-01
+
+Add API documentation using MkAPI.
+
+Change code documentation from numpy to google doc format.
+
 ## 4.2.1 2025-04-28
 
 Add mkdocs documentation, including a version history.
