@@ -11,14 +11,12 @@ from .wif_writer import write_wif
 def run_x_to_wif(suffix: str) -> None:
     """Command-line script to convert weaving pattern files to WIF format.
 
-    Note: the readers all accept opened files instead of file paths to support
-    data from a bytes or stream. For example base_loom_server receives
-    pattern data as a bytes, rather than a file on disk.
+    Note: the readers all accept opened files, instead of file paths,
+    in order to support data from a bytes or stream.
 
-    Parameters
-    ----------
-    suffix : str
-        File suffix; must be one of the entries in SupportedFileSuffixes
+    Args:
+        suffix: File suffix, including a leading period.
+            Must be one of the entries in `SupportedFileSuffixes`.
     """
     if suffix not in SupportedFileSuffixes:
         supported_prefixes_str = ", ".join(sorted(SupportedFileSuffixes))
@@ -80,8 +78,10 @@ def run_x_to_wif(suffix: str) -> None:
 
 
 def run_dtx_to_wif() -> None:
+    """Command-line script to convert FiberWorks .dtx files to WIF."""
     run_x_to_wif(".dtx")
 
 
 def run_wpo_to_wif() -> None:
+    """Command-line script convert WeavePoint .wpo files to WIF."""
     run_x_to_wif(".wpo")

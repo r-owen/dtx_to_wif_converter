@@ -5,13 +5,14 @@ nav:
   - Installing: installing.md
   - Version History: version_history.md
   - API Reference:
-      - $api/dtx_to_wif.***
+      - $api/dtx_to_wif
 theme:
   name: readthedocs
   features:
     - color_mode: auto
 plugins:
   - mkapi
+  - search
 validation:
   omitted_files: warn
   absolute_links: warn  # Or 'relative_to_docs' - new in MkDocs 1.6

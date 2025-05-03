@@ -17,10 +17,9 @@ def as_wif_bool(value: Any) -> str:
 def write_wif(f: TextIO, data: PatternData) -> None:
     """Write a WIF file from parsed dtx data to the specified file.
 
-    Parameters
-    ----------
-    f: file to write to, a writable file-like object
-    data: parsed data
+    Args:
+        f: File-like object to write to.
+        data: Parsed data.
     """
     f.write(
         f"""[WIF]

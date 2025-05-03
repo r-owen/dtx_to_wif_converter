@@ -35,12 +35,9 @@ def read_wpo(f: BinaryIO, filename: str) -> PatternData:
     Does not read per-thread thickness and separation are not read,
     because the company has not told me how to access that information.
 
-    Parameters
-    ----------
-    f : BinaryIO
-        A readable binary file
-    filename : str
-        The file name. Used as the pattern name.
+    Args:
+        f: A readable binary file
+        filename: The file name. Used as the pattern name.
     """
     id_code = read_int(f, 1)
     if id_code != WPO_ID:

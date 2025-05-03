@@ -67,10 +67,10 @@ class TestDtxToWif(unittest.TestCase):
     def check_run_result(self, result, desired_prefix):
         """Check the result from running the function.
 
-        Parameters:
-        result: return value from subprocess.run_result,
-                which must be configured to capture stderr and stdout
-        desired_prefix: the desired beginning of each line of stdout
+        Args:
+            result: Return value from subprocess.run_result,
+                which must be configured to capture stderr and stdout.
+            desired_prefix: The desired beginning of each line of stdout.
         """
         with self.subTest(result=result, desired_prefix=desired_prefix):
             assert result.returncode == 0

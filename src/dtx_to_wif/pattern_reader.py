@@ -20,13 +20,14 @@ class ReaderInfo:
     is_binary: bool
 
 
-# A dict of file suffix: ReaderInfo
+#: A dict of file suffix: ReaderInfo
 Readers = {
     ".dtx": ReaderInfo(reader=read_dtx, is_binary=False),
     ".wif": ReaderInfo(reader=read_wif, is_binary=False),
     ".wpo": ReaderInfo(reader=read_wpo, is_binary=True),
 }
 
+#: File suffixes supported by `read_pattern_data`
 SupportedFileSuffixes = set(Readers.keys())
 
 
