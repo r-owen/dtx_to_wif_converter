@@ -34,7 +34,11 @@
     <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
           <a href="." class="icon icon-home"> dtx_to_wif
-        </a>
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
@@ -66,27 +70,7 @@
               </ul>
               <p class="caption"><span class="caption-text">API Reference</span></p>
               <ul>
-                  <li class="toctree-l1"><a class="reference internal" >dtx_to_wif</a>
-    <ul>
-                <li class="toctree-l2"><a class="reference internal" href="api/dtx_to_wif/">dtx_to_wif</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="api/dtx_to_wif/dtx_reader/">dtx_to_wif.dtx_reader</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="api/dtx_to_wif/pattern_data/">dtx_to_wif.pattern_data</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="api/dtx_to_wif/pattern_reader/">dtx_to_wif.pattern_reader</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="api/dtx_to_wif/run_x_to_wif/">dtx_to_wif.run_x_to_wif</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="api/dtx_to_wif/version/">dtx_to_wif.version</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="api/dtx_to_wif/wif_reader/">dtx_to_wif.wif_reader</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="api/dtx_to_wif/wif_writer/">dtx_to_wif.wif_writer</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="api/dtx_to_wif/wpo_reader/">dtx_to_wif.wpo_reader</a>
-                </li>
-    </ul>
+                  <li class="toctree-l1"><a class="reference internal" href="api/dtx_to_wif/">dtx_to_wif</a>
                   </li>
               </ul>
       </div>
@@ -138,11 +122,11 @@ If a WIF file with that path already exists, the old file is left unchanged, wit
 To overwrite existing files, run the command with option <code>--overwrite</code>.</p>
 <p>If you run the command with option <code>-h</code> you will see all available options.</p>
 <h2 id="reading-files-into-memory">Reading Files Into Memory</h2>
-<p>dtx_to_wif can read .dtx, .wif, and .wpo pattern files into an instance of <a href="api/dtx_to_wif/pattern_data/#dtx_to_wif.pattern_data.PatternData" title="dtx_to_wif.pattern_data.PatternData">dtx_to_wif.PatternData</a>.
+<p>dtx_to_wif can read .dtx, .wif, and .wpo pattern files into an instance of [dtx_to_wif.PatternData][dtx_to_wif.pattern_data.PatternData].
 This is used by <a href="https://r-owen.github.io/base_loom_server">base_loom_server</a> dobby loom control software.
 It could also be used by pattern visualization software and weaving design software.</p>
-<p>To read a weaving pattern from a file, call <a href="api/dtx_to_wif/pattern_reader/#dtx_to_wif.pattern_reader.read_pattern_file" title="dtx_to_wif.pattern_reader.read_pattern_file">dtx_to_wif.read_pattern_file</a>. To read a weaving pattern from a string, call <a href="api/dtx_to_wif/pattern_reader/#dtx_to_wif.pattern_reader.read_pattern_data" title="dtx_to_wif.pattern_reader.read_pattern_data">dtx_to_wif.read_pattern_data</a>.</p>
-<p>To write <a href="api/dtx_to_wif/pattern_data/#dtx_to_wif.pattern_data.PatternData" title="dtx_to_wif.pattern_data.PatternData">dtx_to_wif.PatternData</a> to a WIF file, call <a href="api/dtx_to_wif/wif_writer/#dtx_to_wif.wif_writer.write_wif" title="dtx_to_wif.wif_writer.write_wif">dtx_to_wif.write_wif</a>.</p>
+<p>To read a weaving pattern from a file, call [dtx_to_wif.read_pattern_file][dtx_to_wif.pattern_reader.read_pattern_file]. To read a weaving pattern from a string, call [dtx_to_wif.read_pattern_data][dtx_to_wif.pattern_reader.read_pattern_data].</p>
+<p>To write [dtx_to_wif.PatternData][dtx_to_wif.pattern_data.PatternData] to a WIF file, call [dtx_to_wif.write_wif][dtx_to_wif.wif_writer.write_wif].</p>
 <h2 id="terminal-applications">Terminal Applications</h2>
 <p>The standard terminal applications are <code>Terminal</code> for macOS, and <code>cmd.exe</code> for Windows. Other terminal applications are available, but the standard ones are fine.</p>
 <h2 id="links">Links</h2>
@@ -203,6 +187,7 @@ The main use case for reading WeavePoint files is to support dobby loom control 
     <script src="js/theme_extra.js"></script>
     <script src="js/theme.js"></script>
       <script src="javascript/mkapi.js"></script>
+      <script src="search/main.js"></script>
     <script>
         jQuery(function () {
             SphinxRtdTheme.Navigation.enable(true);
@@ -214,5 +199,5 @@ The main use case for reading WeavePoint files is to support dobby loom control 
 
 <!--
 MkDocs version : 1.6.1
-Build Date UTC : 2025-05-01 19:28:12.021656+00:00
+Build Date UTC : 2025-05-03 19:05:07.341101+00:00
 -->

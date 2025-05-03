@@ -2,86 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://r-owen.github.io/dtx_to_wif/</loc>
-         <lastmod>2025-05-01</lastmod>
+         <lastmod>2025-05-03</lastmod>
     </url>
     <url>
          <loc>https://r-owen.github.io/dtx_to_wif/installing/</loc>
-         <lastmod>2025-05-01</lastmod>
+         <lastmod>2025-05-03</lastmod>
     </url>
     <url>
          <loc>https://r-owen.github.io/dtx_to_wif/version_history/</loc>
-         <lastmod>2025-05-01</lastmod>
+         <lastmod>2025-05-03</lastmod>
     </url>
     <url>
          <loc>https://r-owen.github.io/dtx_to_wif/api/dtx_to_wif/</loc>
-         <lastmod>2025-05-01</lastmod>
+         <lastmod>2025-05-03</lastmod>
     </url>
     <url>
          <loc>https://r-owen.github.io/dtx_to_wif/src/dtx_to_wif/</loc>
-         <lastmod>2025-05-01</lastmod>
-    </url>
-    <url>
-         <loc>https://r-owen.github.io/dtx_to_wif/api/dtx_to_wif/dtx_reader/</loc>
-         <lastmod>2025-05-01</lastmod>
-    </url>
-    <url>
-         <loc>https://r-owen.github.io/dtx_to_wif/src/dtx_to_wif/dtx_reader/</loc>
-         <lastmod>2025-05-01</lastmod>
-    </url>
-    <url>
-         <loc>https://r-owen.github.io/dtx_to_wif/api/dtx_to_wif/pattern_data/</loc>
-         <lastmod>2025-05-01</lastmod>
-    </url>
-    <url>
-         <loc>https://r-owen.github.io/dtx_to_wif/src/dtx_to_wif/pattern_data/</loc>
-         <lastmod>2025-05-01</lastmod>
-    </url>
-    <url>
-         <loc>https://r-owen.github.io/dtx_to_wif/api/dtx_to_wif/pattern_reader/</loc>
-         <lastmod>2025-05-01</lastmod>
-    </url>
-    <url>
-         <loc>https://r-owen.github.io/dtx_to_wif/src/dtx_to_wif/pattern_reader/</loc>
-         <lastmod>2025-05-01</lastmod>
-    </url>
-    <url>
-         <loc>https://r-owen.github.io/dtx_to_wif/api/dtx_to_wif/run_x_to_wif/</loc>
-         <lastmod>2025-05-01</lastmod>
-    </url>
-    <url>
-         <loc>https://r-owen.github.io/dtx_to_wif/src/dtx_to_wif/run_x_to_wif/</loc>
-         <lastmod>2025-05-01</lastmod>
-    </url>
-    <url>
-         <loc>https://r-owen.github.io/dtx_to_wif/api/dtx_to_wif/version/</loc>
-         <lastmod>2025-05-01</lastmod>
-    </url>
-    <url>
-         <loc>https://r-owen.github.io/dtx_to_wif/src/dtx_to_wif/version/</loc>
-         <lastmod>2025-05-01</lastmod>
-    </url>
-    <url>
-         <loc>https://r-owen.github.io/dtx_to_wif/api/dtx_to_wif/wif_reader/</loc>
-         <lastmod>2025-05-01</lastmod>
-    </url>
-    <url>
-         <loc>https://r-owen.github.io/dtx_to_wif/src/dtx_to_wif/wif_reader/</loc>
-         <lastmod>2025-05-01</lastmod>
-    </url>
-    <url>
-         <loc>https://r-owen.github.io/dtx_to_wif/api/dtx_to_wif/wif_writer/</loc>
-         <lastmod>2025-05-01</lastmod>
-    </url>
-    <url>
-         <loc>https://r-owen.github.io/dtx_to_wif/src/dtx_to_wif/wif_writer/</loc>
-         <lastmod>2025-05-01</lastmod>
-    </url>
-    <url>
-         <loc>https://r-owen.github.io/dtx_to_wif/api/dtx_to_wif/wpo_reader/</loc>
-         <lastmod>2025-05-01</lastmod>
-    </url>
-    <url>
-         <loc>https://r-owen.github.io/dtx_to_wif/src/dtx_to_wif/wpo_reader/</loc>
-         <lastmod>2025-05-01</lastmod>
+         <lastmod>2025-05-03</lastmod>
     </url>
 </urlset>

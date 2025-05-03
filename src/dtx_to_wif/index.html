@@ -34,7 +34,11 @@
     <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
           <a href="../.." class="icon icon-home"> dtx_to_wif
-        </a>
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
@@ -52,27 +56,7 @@
               </ul>
               <p class="caption"><span class="caption-text">API Reference</span></p>
               <ul>
-                  <li class="toctree-l1"><a class="reference internal" >dtx_to_wif</a>
-    <ul>
-                <li class="toctree-l2"><a class="reference internal" href="../../api/dtx_to_wif/">dtx_to_wif</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../../api/dtx_to_wif/dtx_reader/">dtx_to_wif.dtx_reader</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../../api/dtx_to_wif/pattern_data/">dtx_to_wif.pattern_data</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../../api/dtx_to_wif/pattern_reader/">dtx_to_wif.pattern_reader</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../../api/dtx_to_wif/run_x_to_wif/">dtx_to_wif.run_x_to_wif</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../../api/dtx_to_wif/version/">dtx_to_wif.version</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../../api/dtx_to_wif/wif_reader/">dtx_to_wif.wif_reader</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../../api/dtx_to_wif/wif_writer/">dtx_to_wif.wif_writer</a>
-                </li>
-                <li class="toctree-l2"><a class="reference internal" href="../../api/dtx_to_wif/wpo_reader/">dtx_to_wif.wpo_reader</a>
-                </li>
-    </ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../api/dtx_to_wif/">dtx_to_wif</a>
                   </li>
               </ul>
       </div>
@@ -119,14 +103,16 @@
 <span class="normal"> 8</span>
 <span class="normal"> 9</span>
 <span class="normal">10</span>
-<span class="normal">11</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">try</span><span class="p">:</span>
+<span class="normal">11</span>
+<span class="normal">12</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="c1"># isort: skip_file</span>
+<span class="k">try</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">.version</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
     <span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;?&quot;</span>
-<span class="kn">from</span> <span class="nn">.dtx_reader</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">.pattern_data</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">.pattern_reader</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">.run_x_to_wif</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.dtx_reader</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">.wif_reader</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">.wif_writer</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">.wpo_reader</span> <span class="kn">import</span> <span class="o">*</span>
@@ -164,6 +150,7 @@
     <script src="../../js/theme_extra.js"></script>
     <script src="../../js/theme.js"></script>
       <script src="../../javascript/mkapi.js"></script>
+      <script src="../../search/main.js"></script>
     <script>
         jQuery(function () {
             SphinxRtdTheme.Navigation.enable(true);
